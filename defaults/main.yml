@@ -1,0 +1,23 @@
+---
+# Database related variables (password must be changed)
+netbox_database: netbox
+netbox_database_user: netbox
+netbox_database_password: netbox
+
+# Git URL and version to use, version must be a Git tag
+netbox_version: v1.7.3
+netbox_git_url: https://github.com/digitalocean/netbox.git
+
+# Where to install Netbox
+netbox_install_directory: /opt/netbox
+
+# Configuration settings, to be ajusted, especially the secret key
+netbox_config_allowed_hosts:
+  - localhost
+  - netbox.example.com
+netbox_config_secret_key: R+9A&c7R935e(5pI5t!_8s1(hXGHmUIUm!X+)O-^Js4bII12_t
+
+# Mostly used for the first setup, superuser password still need to be set
+netbox_superuser_username: admin
+netbox_superuser_email: admin@example.com
+netbox_load_initial_data: true

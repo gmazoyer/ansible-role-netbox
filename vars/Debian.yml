@@ -1,0 +1,22 @@
+---
+__postgresql_packages:
+  - postgresql
+  - libpq-dev
+  - python-psycopg2
+
+__dependencies_packages:
+  - git
+  - python2.7
+  - python-dev
+  - python-pip
+  - libxml2-dev
+  - libxslt1-dev
+  - libffi-dev
+  - graphviz
+  - libpq-dev
+  - libssl-dev
+
+become_method_to_user: su
+
+postgresql_service: postgresql
+postgresql_user: postgres

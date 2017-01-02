@@ -1,0 +1,9 @@
+- name: install postgresql
+  apt:
+    pkg: "{{ item }}"
+  with_items: "{{ postgresql_packages }}"
+
+- name: install dependencies
+  apt:
+    pkg: "{{ item }}"
+  with_items: "{{ dependencies_packages }}"
