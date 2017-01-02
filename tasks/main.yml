@@ -13,6 +13,11 @@
     dependencies_packages: "{{ __dependencies_packages | list }}"
   when: dependencies_packages is not defined
 
+- name: define web backend packages
+  set_fact:
+    web_backend_packages: "{{ __web_backend_packages | list }}"
+  when: web_backend_packages is not defined
+
 # Install and setup tasks
 - include: "setup-{{ ansible_os_family }}.yml"
   static: no
@@ -87,3 +92,26 @@
     command: loaddata
     fixtures: initial_data
   when: not netbox_installed.stat.exists and netbox_load_initial_data
+
+# Setup web backend if enabled
+- name: configure gunicorn
+  template:
+    src: gunicorn_config.py.j2
+    dest: "{{ netbox_install_directory }}/gunicorn_config.py"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart supervisor
+  when: netbox_setup_web_backend
+
+- name: configure supervisor
+  template:
+    src: netbox.conf.j2
+    dest: "{{ supervisord_config_directory }}/netbox.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart supervisor
+  when: netbox_setup_web_backend

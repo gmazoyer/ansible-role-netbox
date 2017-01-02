@@ -21,3 +21,11 @@ netbox_config_secret_key: R+9A&c7R935e(5pI5t!_8s1(hXGHmUIUm!X+)O-^Js4bII12_t
 netbox_superuser_username: admin
 netbox_superuser_email: admin@example.com
 netbox_load_initial_data: true
+
+# Web backend variables (not configured by default)
+netbox_setup_web_backend: false
+netbox_gunicorn_address: 127.0.0.1
+netbox_gunicorn_port: 8001
+netbox_gunicorn_workers_number: 3
+netbox_gunicorn_user: root
+netbox_supervisor_user: root

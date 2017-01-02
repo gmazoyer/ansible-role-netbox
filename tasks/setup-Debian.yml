@@ -7,3 +7,9 @@
   apt:
     pkg: "{{ item }}"
   with_items: "{{ dependencies_packages }}"
+
+- name: install web backend tools
+  apt:
+    pkg: "{{ item }}"
+  with_items: "{{ web_backend_packages }}"
+  when: netbox_setup_web_backend

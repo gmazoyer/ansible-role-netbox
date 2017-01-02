@@ -16,7 +16,16 @@ __dependencies_packages:
   - libpq-dev
   - libssl-dev
 
+__web_backend_packages:
+  - gunicorn
+  - supervisor
+
 become_method_to_user: su
 
 postgresql_service: postgresql
 postgresql_user: postgres
+
+supervisord_service: supervisor
+supervisord_config_directory: /etc/supervisor/conf.d
+
+gunicorn_binary_path: /usr/bin/gunicorn
