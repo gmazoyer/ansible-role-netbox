@@ -35,6 +35,8 @@ supervisord_config_directory: /etc/supervisor/conf.d
 gunicorn_binary_path: /usr/bin/gunicorn
 
 apache2_service: apache2
+apache2_user: www-data
+apache2_group: www-data
 apache2_sites_available_path: /etc/apache2/sites-available
 apache2_sites_enabled_path: /etc/apache2/sites-enabled
 apache2_default_vhost: 000-default.conf
