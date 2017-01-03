@@ -18,6 +18,11 @@
     web_backend_packages: "{{ __web_backend_packages | list }}"
   when: web_backend_packages is not defined
 
+- name: define web frontend packages
+  set_fact:
+    web_frontend_packages: "{{ __web_frontend_packages | list }}"
+  when: web_frontend_packages is not defined
+
 # Install and setup tasks
 - include: "setup-{{ ansible_os_family }}.yml"
   static: no
@@ -115,3 +120,40 @@
   notify:
     - restart supervisor
   when: netbox_setup_web_backend
+
+# Setup web frontend if enabled
+- name: enable mod_proxy and mod_proxy_http
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - proxy
+    - proxy_http
+  notify:
+    - restart apache2
+  when: netbox_setup_web_frontend
+
+- name: remove default vhost
+  file:
+    path: "{{ apache2_sites_enabled_path }}/{{ apache2_default_vhost }}"
+    state: absent
+  notify:
+    - restart apache2
+  when: netbox_setup_web_frontend
+
+- name: configure netbox vhost
+  template:
+    src: netbox_vhost.conf.j2
+    dest: "{{ apache2_sites_available_path }}/netbox.conf"
+    owner: "{{ apache2_user }}"
+    group: "{{ apache2_group }}"
+  when: netbox_setup_web_frontend
+
+- name: enable netbox vhost
+  file:
+    src: "{{ apache2_sites_available_path }}/netbox.conf"
+    dest: "{{ apache2_sites_enabled_path }}/netbox.conf"
+    state: link
+  notify:
+    - restart apache2
+  when: netbox_setup_web_frontend

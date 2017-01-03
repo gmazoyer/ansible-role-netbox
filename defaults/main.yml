@@ -29,3 +29,6 @@ netbox_gunicorn_port: 8001
 netbox_gunicorn_workers_number: 3
 netbox_gunicorn_user: root
 netbox_supervisor_user: root
+
+# Web frontend variables (not configured by default)
+netbox_setup_web_frontend: false

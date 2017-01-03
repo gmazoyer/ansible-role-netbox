@@ -20,6 +20,10 @@ __web_backend_packages:
   - gunicorn
   - supervisor
 
+__web_frontend_packages:
+  - apache2
+  - apache2-utils
+
 become_method_to_user: su
 
 postgresql_service: postgresql
@@ -29,3 +33,8 @@ supervisord_service: supervisor
 supervisord_config_directory: /etc/supervisor/conf.d
 
 gunicorn_binary_path: /usr/bin/gunicorn
+
+apache2_service: apache2
+apache2_sites_available_path: /etc/apache2/sites-available
+apache2_sites_enabled_path: /etc/apache2/sites-enabled
+apache2_default_vhost: 000-default.conf

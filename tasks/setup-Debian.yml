@@ -13,3 +13,9 @@
     pkg: "{{ item }}"
   with_items: "{{ web_backend_packages }}"
   when: netbox_setup_web_backend
+
+- name: install web frontend tools
+  apt:
+    pkg: "{{ item }}"
+  with_items: "{{ web_frontend_packages }}"
+  when: netbox_setup_web_frontend

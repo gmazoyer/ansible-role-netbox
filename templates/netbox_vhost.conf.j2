@@ -1,0 +1,22 @@
+# {{ ansible_managed }}
+
+{% for host in netbox_config_allowed_hosts %}
+<VirtualHost *:80>
+  ServerName {{ host }}
+
+  Alias /static {{ netbox_install_directory}}/netbox/static
+  <Directory {{ netbox_install_directory }}/netbox/static>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
+    Require all granted
+  </Directory>
+
+  <Location /static>
+    ProxyPass !
+  </Location>
+
+  ProxyPreserveHost On
+  ProxyPass        / http://{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}/
+  ProxyPassReverse / http://{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}/
+</VirtualHost>
+{% endfor %}
