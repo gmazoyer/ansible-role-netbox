@@ -24,7 +24,7 @@ __web_frontend_packages:
   - apache2
   - apache2-utils
 
-become_method_to_user: su
+become_method_to_use: su
 
 postgresql_service: postgresql
 postgresql_user: postgres
