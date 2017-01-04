@@ -1,9 +1,4 @@
 ---
-- name: restart supervisor
-  service:
-    name: "{{ supervisord_service }}"
-    state: restarted
-
 - name: restart apache2
   service:
     name: "{{ apache2_service }}"

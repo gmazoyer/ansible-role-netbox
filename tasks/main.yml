@@ -106,9 +106,8 @@
     owner: root
     group: root
     mode: 0644
-  notify:
-    - restart supervisor
   when: netbox_setup_web_backend
+  register: gunicorn_config
 
 - name: configure supervisor
   template:
@@ -117,9 +116,14 @@
     owner: root
     group: root
     mode: 0644
-  notify:
-    - restart supervisor
   when: netbox_setup_web_backend
+  register: supervisord_config
+
+- name: restart supervisord
+  supervisorctl:
+    name: netbox
+    state: restarted
+  when: gunicorn_config.changed or supervisord_config.changed
 
 # Setup web frontend if enabled
 - name: enable mod_proxy and mod_proxy_http
