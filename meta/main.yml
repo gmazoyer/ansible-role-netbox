@@ -1,3 +1,18 @@
 ---
+galaxy_info:
+  author: Guillaume Mazoyer
+  description: A role to install Netbox.
+  license: GPL-3+
+  min_ansible_version: 2.1.0
+  platforms:
+    - name: Debian
+      versions:
+        - jessie
+  galaxy_tags:
+    - system
+    - networking
+    - web
+    - database
+
 dependencies: []
 allow_duplicates: yes
