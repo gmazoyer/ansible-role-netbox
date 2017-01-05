@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Guillaume Mazoyer
-  description: A role to install Netbox.
+  description: A role to install and update Netbox.
   license: GPL-3+
   min_ansible_version: 2.1.0
   platforms:
