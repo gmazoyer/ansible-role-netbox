@@ -1,7 +1,5 @@
 ---
 
 - hosts: localhost
-  vars:
-    become_method_to_use: sudo
   roles:
     - ansible-role-netbox
