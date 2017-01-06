@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/respawner/ansible-role-netbox.svg?branch=master)](https://travis-ci.org/respawner/ansible-role-netbox)
+
 # Ansible Role: Netbox
 
 An Ansible Role that installs on Debian/Ubuntu.
