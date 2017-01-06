@@ -5,7 +5,7 @@
 
 - name: ensure postgresql is started
   service:
-    name: {{ postgresql_service }}
+    name: "{{ postgresql_service }}"
     enabled: yes
     state: started
 
