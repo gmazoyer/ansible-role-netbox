@@ -3,4 +3,4 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - ansible-role-netbox
+    - role_under_test

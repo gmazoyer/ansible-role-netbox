@@ -3,6 +3,12 @@
     pkg: "{{ item }}"
   with_items: "{{ postgresql_packages }}"
 
+- name: ensure postgresql is started
+  service:
+    name: {{ postgresql_service }}
+    enabled: yes
+    state: started
+
 - name: install dependencies
   apt:
     pkg: "{{ item }}"
