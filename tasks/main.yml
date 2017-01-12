@@ -122,7 +122,8 @@
   supervisorctl:
     name: netbox
     state: restarted
-  when: gunicorn_config.changed or supervisord_config.changed or netbox_downloaded.changed
+  when: gunicorn_config.changed or supervisord_config.changed or
+    (netbox_download.changed and netbox_setup_web_backend)
 
 # Setup web frontend if enabled
 - name: enable mod_proxy and mod_proxy_http
