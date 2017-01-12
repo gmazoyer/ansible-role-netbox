@@ -56,7 +56,6 @@
     repo: "{{ netbox_git_url }}"
     version: "{{ netbox_version }}"
     dest: "{{ netbox_install_directory }}"
-  when: not netbox_installed.stat.exists
   register: netbox_downloaded
 
 - name: install python requirements
@@ -123,7 +122,7 @@
   supervisorctl:
     name: netbox
     state: restarted
-  when: gunicorn_config.changed or supervisord_config.changed
+  when: gunicorn_config.changed or supervisord_config.changed or netbox_downloaded.changed
 
 # Setup web frontend if enabled
 - name: enable mod_proxy and mod_proxy_http
