@@ -36,6 +36,11 @@ A secret key that must be unique to each installation:
 
     netbox_config_secret_key: TO_CHANGE
 
+Set the timezone to be used (a list of available TZs can be found
+[here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)):
+
+    netbox_config_time_zone: UTC
+
 The username and email for the super user. Its password must be set manually
 via the manage.py tool of the application:
 

@@ -16,6 +16,7 @@ netbox_config_allowed_hosts:
   - localhost
   - netbox.example.com
 netbox_config_secret_key: R+9A&c7R935e(5pI5t!_8s1(hXGHmUIUm!X+)O-^Js4bII12_t
+netbox_config_time_zone: UTC
 
 # Mostly used for the first setup, superuser password still need to be set
 netbox_superuser_username: admin
