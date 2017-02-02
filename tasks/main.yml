@@ -117,7 +117,7 @@
   when: netbox_setup_web_backend
   register: gunicorn_config
 
-- name: configure supervisor
+- name: configure supervisord
   template:
     src: netbox.conf.j2
     dest: "{{ supervisord_config_directory }}/netbox.conf"
@@ -126,6 +126,12 @@
     mode: 0644
   when: netbox_setup_web_backend
   register: supervisord_config
+
+- name: ensure supervisord is started
+  service:
+    name: "{{ supervisord_service }}"
+    state: started
+  when: netbox_setup_web_backend
 
 - name: restart supervisord
   supervisorctl:
