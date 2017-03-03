@@ -5,7 +5,7 @@ netbox_database_user: netbox
 netbox_database_password: netbox
 
 # Git URL and version to use, version must be a Git tag
-netbox_version: v1.8.4
+netbox_version: v1.9.0
 netbox_git_url: https://github.com/digitalocean/netbox.git
 
 # Where to install Netbox
