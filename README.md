@@ -17,6 +17,7 @@ Setup for the PostgreSQL database:
     netbox_database: netbox
     netbox_database_user: netbox
     netbox_database_password: netbox
+    netbox_database_host: localhost
 
 Where to get Netbox and which version:
 

@@ -19,7 +19,7 @@ DATABASE = {
     'NAME': '{{ netbox_database }}', # Database name
     'USER': '{{ netbox_database_user }}', # PostgreSQL username
     'PASSWORD': '{{ netbox_database_password }}', # PostgreSQL password
-    'HOST': 'localhost', # Database server
+    'HOST': '{{ netbox_database_host }}', # Database server
     'PORT': '', # Database port (leave blank for default)
 }
 

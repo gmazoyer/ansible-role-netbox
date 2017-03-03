@@ -3,6 +3,7 @@
 netbox_database: netbox
 netbox_database_user: netbox
 netbox_database_password: netbox
+netbox_database_host: localhost
 
 # Git URL and version to use, version must be a Git tag
 netbox_version: v1.9.0
