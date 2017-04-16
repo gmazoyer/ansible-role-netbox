@@ -1,31 +1,5 @@
 ---
-# Include variables and define needed variables
-- name: include OS-specific variables
-  include_vars: "{{ item }}"
-  with_first_found:
-    - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
-    - "{{ ansible_distribution }}.yml"
-    - "{{ ansible_os_family }}.yml"
-
-- name: define postgresql packages
-  set_fact:
-    postgresql_packages: "{{ __postgresql_packages | list }}"
-  when: postgresql_packages is not defined
-
-- name: define dependencies packages
-  set_fact:
-    dependencies_packages: "{{ __dependencies_packages | list }}"
-  when: dependencies_packages is not defined
-
-- name: define web backend packages
-  set_fact:
-    web_backend_packages: "{{ __web_backend_packages | list }}"
-  when: web_backend_packages is not defined
-
-- name: define web frontend packages
-  set_fact:
-    web_frontend_packages: "{{ __web_frontend_packages | list }}"
-  when: web_frontend_packages is not defined
+- include: include-vars.yml
 
 # Install and setup tasks
 - name: install postgresql
