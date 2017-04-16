@@ -1,0 +1,67 @@
+---
+# Setup Netbox
+- name: check if there is a netbox install
+  stat:
+    path: "{{ netbox_install_directory }}"
+  register: netbox_installed
+
+- name: download netbox using git
+  git:
+    repo: "{{ netbox_git_url }}"
+    version: "{{ netbox_version }}"
+    dest: "{{ netbox_install_directory }}"
+  register: netbox_downloaded
+
+- name: upgrade pip
+  pip:
+    name: pip
+    extra_args: "--upgrade"
+  when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
+
+- name: install pip specific packages for requirements
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - packaging
+    - appdirs
+  when: (ansible_distribution == "Debian" and ansible_distribution_release == "jessie") or
+        (ansible_distribution == "Ubuntu" and ansible_distribution_release == "trusty")
+
+- name: install python requirements
+  pip:
+    requirements: "{{ netbox_install_directory }}/requirements.txt"
+    extra_args: "--upgrade"
+  when: netbox_downloaded.changed
+
+- name: configure netbox
+  template:
+    src: configuration.py.j2
+    dest: "{{ netbox_install_directory }}/netbox/netbox/configuration.py"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: perform database migration
+  django_manage:
+    app_path: "{{ netbox_install_directory }}/netbox"
+    command: migrate
+  when: netbox_downloaded.changed
+
+- name: create super user
+  django_manage:
+    app_path: "{{ netbox_install_directory }}/netbox"
+    command: "createsuperuser --noinput --username={{ netbox_superuser_username }} --email={{ netbox_superuser_email }}"
+  when: not netbox_installed.stat.exists
+
+- name: collect static files
+  django_manage:
+    app_path: "{{ netbox_install_directory }}/netbox"
+    command: collectstatic
+  when: netbox_downloaded.changed
+
+- name: load initial data
+  django_manage:
+    app_path: "{{ netbox_install_directory }}/netbox"
+    command: loaddata
+    fixtures: initial_data
+  when: not netbox_installed.stat.exists and netbox_load_initial_data

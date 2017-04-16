@@ -1,0 +1,31 @@
+---
+# Setup web backend if enabled
+- name: configure gunicorn
+  template:
+    src: gunicorn_config.py.j2
+    dest: "{{ netbox_install_directory }}/gunicorn_config.py"
+    owner: root
+    group: root
+    mode: 0644
+  register: gunicorn_config
+
+- name: configure supervisord
+  template:
+    src: netbox.conf.j2
+    dest: "{{ supervisord_config_directory }}/netbox.conf"
+    owner: root
+    group: root
+    mode: 0644
+  register: supervisord_config
+
+- name: ensure supervisord is started
+  service:
+    name: "{{ supervisord_service }}"
+    state: started
+
+- name: restart supervisord
+  supervisorctl:
+    name: netbox
+    state: restarted
+  when: gunicorn_config.changed or supervisord_config.changed or
+        netbox_downloaded.changed

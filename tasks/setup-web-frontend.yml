@@ -1,0 +1,33 @@
+---
+# Setup web frontend if enabled
+- name: enable mod_proxy and mod_proxy_http
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - proxy
+    - proxy_http
+  notify:
+    - restart apache2
+
+- name: remove default vhost
+  file:
+    path: "{{ apache2_sites_enabled_path }}/{{ apache2_default_vhost }}"
+    state: absent
+  notify:
+    - restart apache2
+
+- name: configure netbox vhost
+  template:
+    src: netbox_vhost.conf.j2
+    dest: "{{ apache2_sites_available_path }}/netbox.conf"
+    owner: "{{ apache2_user }}"
+    group: "{{ apache2_group }}"
+
+- name: enable netbox vhost
+  file:
+    src: "{{ apache2_sites_available_path }}/netbox.conf"
+    dest: "{{ apache2_sites_enabled_path }}/netbox.conf"
+    state: link
+  notify:
+    - restart apache2
