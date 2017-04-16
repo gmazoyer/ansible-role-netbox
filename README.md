@@ -4,6 +4,14 @@
 
 An Ansible Role that installs on Debian/Ubuntu.
 
+This role install all dependencies required by Netbox including the PostgreSQL
+database. So it can be used to setup a Netbox appliance including everything in
+the same machine.
+
+Web backend and frontend setups can be disabled if you already have your own
+way to handle them. The database setup however needs some work to be able to
+use a PostgreSQL database located on another machine.
+
 ## Dependencies
 
 None.
