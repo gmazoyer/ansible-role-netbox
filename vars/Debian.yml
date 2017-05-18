@@ -15,6 +15,7 @@ __dependencies_packages:
   - graphviz
   - libpq-dev
   - libssl-dev
+  - zlib1g-dev
 
 __web_backend_packages:
   - gunicorn
