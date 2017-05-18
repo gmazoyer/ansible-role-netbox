@@ -5,6 +5,10 @@
   ServerName {{ host }}
 
   Alias /static {{ netbox_install_directory}}/netbox/static
+
+  # Needed to allow token-based API authentication
+  WSGIPassAuthorization on
+
   <Directory {{ netbox_install_directory }}/netbox/static>
     Options Indexes FollowSymLinks MultiViews
     AllowOverride None
