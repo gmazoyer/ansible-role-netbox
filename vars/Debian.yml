@@ -24,6 +24,7 @@ __web_backend_packages:
 __web_frontend_packages:
   - apache2
   - apache2-utils
+  - libapache2-mod-wsgi
 
 become_method_to_use: su
 
