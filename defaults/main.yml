@@ -6,7 +6,7 @@ netbox_database_password: netbox
 netbox_database_host: localhost
 
 # Git URL and version to use, version must be a Git tag
-netbox_version: v2.0.4
+netbox_version: v2.0.5
 netbox_git_url: https://github.com/digitalocean/netbox.git
 
 # Where to install Netbox
