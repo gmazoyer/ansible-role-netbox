@@ -29,7 +29,7 @@ Setup for the PostgreSQL database:
 
 Where to get Netbox and which version:
 
-    netbox_version: v2.0.10
+    netbox_version: v2.1.0
     netbox_git_url: https://github.com/digitalocean/netbox.git
 
 Where to install Netbox:
@@ -55,6 +55,13 @@ via the manage.py tool of the application:
 
     netbox_superuser_username: admin
     netbox_superuser_email: admin@example.com
+
+NAPALM integration with username and password to be used when connecting to
+devices:
+
+    netbox_use_napalm: false
+    netbox_devices_username: ''
+    netbox_devices_password: ''
 
 Whether or not to load the initial data of Netbox:
 

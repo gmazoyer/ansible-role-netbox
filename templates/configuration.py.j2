@@ -89,8 +89,8 @@ MAINTENANCE_MODE = False
 MAX_PAGE_SIZE = 1000
 
 # Credentials that NetBox will use to access live devices.
-NETBOX_USERNAME = ''
-NETBOX_PASSWORD = ''
+NETBOX_USERNAME = '{{ netbox_devices_username | default('') }}'
+NETBOX_PASSWORD = '{{ netbox_devices_password | default('') }}'
 
 # Determine how many objects to display per page within a list. (Default: 50)
 PAGINATE_COUNT = 50
