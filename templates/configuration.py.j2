@@ -78,7 +78,7 @@ ENFORCE_GLOBAL_UNIQUE = False
 
 # Setting this to True will permit only authenticated users to access any part of NetBox. By default, anonymous users
 # are permitted to access most data in NetBox (excluding secrets) but not make any changes.
-LOGIN_REQUIRED = False
+LOGIN_REQUIRED = {{ netbox_login_required | default('False')  }}
 
 # Setting this to True will display a "maintenance mode" banner at the top of every page.
 MAINTENANCE_MODE = False

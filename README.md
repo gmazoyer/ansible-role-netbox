@@ -56,6 +56,10 @@ via the manage.py tool of the application:
     netbox_superuser_username: admin
     netbox_superuser_email: admin@example.com
 
+Force user to login to see data recorded inside Netbox:
+
+    netbox_login_required: False
+
 NAPALM integration with username and password to be used when connecting to
 devices:
 
