@@ -1,5 +1,11 @@
 ---
 # Setup web backend if enabled
+- name: install gunicorn
+  pip:
+    name: gunicorn
+    extra_args: "--upgrade"
+    executable: "{{ netbox_pip_binary }}"
+
 - name: configure gunicorn
   template:
     src: gunicorn_config.py.j2

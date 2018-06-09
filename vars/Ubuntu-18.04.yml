@@ -6,8 +6,8 @@ __postgresql_packages:
 
 __dependencies_packages:
   - git
-  - python3.5
-  - python3.5-dev
+  - python3.6
+  - python3.6-dev
   - python3-pip
   - libxml2-dev
   - libxslt1-dev
@@ -30,7 +30,7 @@ __web_frontend_packages:
   - apache2-utils
   - libapache2-mod-wsgi
 
-netbox_python_binary: /usr/bin/python3.5
+netbox_python_binary: /usr/bin/python3.6
 netbox_pip_binary: pip3
 
 become_method_to_use: su

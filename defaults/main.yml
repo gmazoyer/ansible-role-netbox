@@ -6,7 +6,7 @@ netbox_database_password: netbox
 netbox_database_host: localhost
 
 # Git URL and version to use, version must be a Git tag
-netbox_version: v2.3.3
+netbox_version: v2.3.4
 netbox_git_url: https://github.com/digitalocean/netbox.git
 
 # Where to install Netbox
@@ -29,6 +29,13 @@ netbox_use_napalm: false
 
 # LDAP authentication
 netbox_setup_ldap_auth: false
+# LDAP configuration, can be used like
+# netbox_ldap_config: |
+#                     This is my configuration on multiple lines.
+#                     That is pretty simple to do, but maybe painful?
+# Example for LDAP configuration can be found at the following URL:
+# http://netbox.readthedocs.io/en/latest/installation/ldap/
+netbox_ldap_config: ""
 
 # Web backend variables (not configured by default)
 netbox_setup_web_backend: false

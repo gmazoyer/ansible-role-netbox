@@ -11,6 +11,7 @@
   postgresql_user:
     name: "{{ netbox_database_user }}"
     password: "{{ netbox_database_password }}"
+    encrypted: yes
     db: "{{ netbox_database }}"
     priv: ALL
   become: true

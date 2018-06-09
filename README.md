@@ -1,11 +1,11 @@
 [![Build Status](https://travis-ci.org/respawner/ansible-role-netbox.svg?branch=master)](https://travis-ci.org/respawner/ansible-role-netbox)
 
-# Ansible Role: Netbox
+# Ansible Role: NetBox
 
 An Ansible Role that installs on Debian/Ubuntu.
 
-This role install all dependencies required by Netbox including the PostgreSQL
-database. So it can be used to setup a Netbox appliance including everything in
+This role install all dependencies required by NetBox including the PostgreSQL
+database. So it can be used to setup a NetBox appliance including everything in
 the same machine.
 
 Web backend and frontend setups can be disabled if you already have your own
@@ -27,16 +27,16 @@ Setup for the PostgreSQL database:
     netbox_database_password: netbox
     netbox_database_host: localhost
 
-Where to get Netbox and which version:
+Where to get NetBox and which version:
 
-    netbox_version: v2.3.3
+    netbox_version: v2.3.4
     netbox_git_url: https://github.com/digitalocean/netbox.git
 
-Where to install Netbox:
+Where to install NetBox:
 
     netbox_install_directory: /opt/netbox
 
-FQDN accepted when trying to reach Netbox, a error 400 will be sent back to
+FQDN accepted when trying to reach NetBox, a error 400 will be sent back to
 the user if he does not use one of the listed FQDN:
 
     netbox_config_allowed_hosts: ['localhost', 'netbox.example.com']
@@ -56,9 +56,16 @@ via the manage.py tool of the application:
     netbox_superuser_username: admin
     netbox_superuser_email: admin@example.com
 
-Force user to login to see data recorded inside Netbox:
+Force user to login to see data recorded inside NetBox:
 
-    netbox_login_required: False
+    netbox_login_required: false
+
+LDAP can be used as authentication mechanism. It must be enabled, and the whole
+LDAP configuration has to be provided in the following variables (see NetBox
+[documentation](http://netbox.readthedocs.io/en/latest/installation/ldap/)):
+
+    netbox_setup_ldap_auth: false
+    netbox_ldap_config: ""
 
 NAPALM integration with username and password to be used when connecting to
 devices:
@@ -67,7 +74,7 @@ devices:
     netbox_devices_username: ''
     netbox_devices_password: ''
 
-Whether or not to load the initial data of Netbox:
+Whether or not to load the initial data of NetBox:
 
     netbox_load_initial_data: true
 

@@ -12,38 +12,33 @@
     dest: "{{ netbox_install_directory }}"
   register: netbox_downloaded
 
-- name: upgrade pip
+- name: install virtualenv using pip
   pip:
-    name: pip
+    name: virtualenv
     extra_args: "--upgrade"
-  when: (ansible_distribution == "Debian" and ansible_distribution_release == "jessie") or
-        (ansible_distribution == "Ubuntu" and ansible_distribution_release == "trusty")
-
-- name: install pip specific packages for requirements
-  pip:
-    name: "{{ item }}"
-  with_items:
-    - packaging
-    - appdirs
-  when: (ansible_distribution == "Debian" and ansible_distribution_release == "jessie") or
-        (ansible_distribution == "Ubuntu" and ansible_distribution_release == "trusty")
+    executable: "{{ netbox_pip_binary }}"
 
 - name: install napalm for pulling devices info
   pip:
     name: napalm
+    extra_args: "--upgrade"
+    virtualenv: "{{ netbox_install_directory }}"
+    virtualenv_python: "{{ netbox_python_binary }}"
   when: netbox_use_napalm and (netbox_devices_username is defined) and
         (netbox_devices_password is defined)
 
-- name: delete stale bytecode
-  command: find . -name '*.pyc' -delete
-  args:
-    chdir: "{{ netbox_install_directory }}"
-  when: netbox_downloaded.changed
+- block:
+  - name: delete stale bytecode
+    command: find . -name '*.pyc' -delete
+    args:
+      chdir: "{{ netbox_install_directory }}"
 
-- name: install python requirements
-  pip:
-    requirements: "{{ netbox_install_directory }}/requirements.txt"
-    extra_args: "--upgrade"
+  - name: install python requirements
+    pip:
+      requirements: "{{ netbox_install_directory }}/requirements.txt"
+      extra_args: "--upgrade"
+      virtualenv: "{{ netbox_install_directory }}"
+      virtualenv_python: "{{ netbox_python_binary }}"
   when: netbox_downloaded.changed
 
 - name: configure netbox
@@ -54,27 +49,49 @@
     group: root
     mode: 0644
 
-- name: perform database migration
-  django_manage:
-    app_path: "{{ netbox_install_directory }}/netbox"
-    command: migrate
+- block:
+  - name: install django-auth-ldap
+    pip:
+      name: django-auth-ldap
+      extra_args: "--upgrade"
+      virtualenv: "{{ netbox_install_directory }}"
+      virtualenv_python: "{{ netbox_python_binary }}"
+
+  - name: configure ldap auth
+    copy:
+      content: "{{ netbox_ldap_config }}"
+      dest: "{{ netbox_install_directory }}/netbox/netbox/ldap_config.py"
+      owner: root
+      group: root
+      mode: 0644
+  when: netbox_setup_ldap_auth
+
+- block:
+  - name: perform database migration
+    django_manage:
+      app_path: "{{ netbox_install_directory }}/netbox"
+      command: migrate
+      virtualenv: "{{ netbox_install_directory }}"
+
+  - name: collect static files
+    django_manage:
+      app_path: "{{ netbox_install_directory }}/netbox"
+      command: collectstatic
+      virtualenv: "{{ netbox_install_directory }}"
   when: netbox_downloaded.changed
 
-- name: create super user
-  django_manage:
-    app_path: "{{ netbox_install_directory }}/netbox"
-    command: "createsuperuser --noinput --username={{ netbox_superuser_username }} --email={{ netbox_superuser_email }}"
+- block:
+  - name: create super user
+    django_manage:
+      app_path: "{{ netbox_install_directory }}/netbox"
+      command: "createsuperuser --noinput --username={{ netbox_superuser_username }} --email={{ netbox_superuser_email }}"
+      virtualenv: "{{ netbox_install_directory }}"
+
+  - name: load initial data
+    django_manage:
+      app_path: "{{ netbox_install_directory }}/netbox"
+      command: loaddata
+      fixtures: initial_data
+      virtualenv: "{{ netbox_install_directory }}"
+    when: netbox_load_initial_data
   when: not netbox_installed.stat.exists
-
-- name: collect static files
-  django_manage:
-    app_path: "{{ netbox_install_directory }}/netbox"
-    command: collectstatic
-  when: netbox_downloaded.changed
-
-- name: load initial data
-  django_manage:
-    app_path: "{{ netbox_install_directory }}/netbox"
-    command: loaddata
-    fixtures: initial_data
-  when: not netbox_installed.stat.exists and netbox_load_initial_data
