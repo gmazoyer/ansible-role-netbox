@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 
-command = '{{ gunicorn_binary_path }}'
+command = '{{ netbox_install_directory }}/bin/gunicorn'
 pythonpath = '{{ netbox_install_directory }}/netbox'
 bind = '{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}'
 workers = {{ netbox_gunicorn_workers_number }}
