@@ -38,8 +38,6 @@ become_method_to_use: su
 postgresql_service: postgresql
 postgresql_user: postgres
 
-gunicorn_binary_path: /usr/local/bin/gunicorn
-
 supervisord_service: supervisor
 supervisord_config_directory: /etc/supervisor/conf.d
 

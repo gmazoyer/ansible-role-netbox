@@ -4,7 +4,8 @@
   pip:
     name: gunicorn
     extra_args: "--upgrade"
-    executable: "{{ netbox_pip_binary }}"
+    virtualenv: "{{ netbox_install_directory }}"
+    virtualenv_python: "{{ netbox_python_binary }}"
 
 - name: configure gunicorn
   template:
