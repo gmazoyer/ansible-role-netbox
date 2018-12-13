@@ -36,20 +36,6 @@ Where to install NetBox:
 
     netbox_install_directory: /opt/netbox
 
-FQDN accepted when trying to reach NetBox, a error 400 will be sent back to
-the user if he does not use one of the listed FQDN:
-
-    netbox_config_allowed_hosts: ['localhost', 'netbox.example.com']
-
-A secret key that must be unique to each installation:
-
-    netbox_config_secret_key: TO_CHANGE
-
-Set the timezone to be used (a list of available TZs can be found
-[here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)):
-
-    netbox_config_time_zone: UTC
-
 The username, password and email for the super user.
 
     netbox_superuser_username: admin
