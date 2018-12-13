@@ -89,8 +89,6 @@ Configuration for the backend web servers:
     netbox_gunicorn_address: 127.0.0.1
     netbox_gunicorn_port: 8001
     netbox_gunicorn_workers_number: 4
-    netbox_gunicorn_user: root
-    netbox_supervisor_user: root
 
 Whether or not to configure the frontend web server:
 
