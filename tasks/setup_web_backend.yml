@@ -20,7 +20,7 @@
 - name: configure supervisord
   template:
     src: netbox.conf.j2
-    dest: "{{ supervisord_config_directory }}/netbox.conf"
+    dest: "{{ netbox_supervisord_config_directory }}/netbox.conf"
     owner: root
     group: root
     mode: 0644
@@ -28,7 +28,7 @@
 
 - name: ensure supervisord is started
   service:
-    name: "{{ supervisord_service }}"
+    name: "{{ netbox_supervisord_service }}"
     state: started
 
 - name: restart supervisord
@@ -36,5 +36,6 @@
     name: netbox
     state: restarted
   when: >
-    gunicorn_config.changed or supervisord_config.changed
+    gunicorn_config.changed
+    or supervisord_config.changed
     or netbox_downloaded.changed

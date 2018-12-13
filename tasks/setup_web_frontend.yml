@@ -12,7 +12,7 @@
 
 - name: remove default vhost
   file:
-    path: "{{ apache2_sites_enabled_path }}/{{ apache2_default_vhost }}"
+    path: "{{ netbox_apache2_sites_enabled_path }}/{{ netbox_apache2_default_vhost }}"
     state: absent
   notify:
     - restart apache2
@@ -20,14 +20,14 @@
 - name: configure netbox vhost
   template:
     src: netbox_vhost.conf.j2
-    dest: "{{ apache2_sites_available_path }}/netbox.conf"
-    owner: "{{ apache2_user }}"
-    group: "{{ apache2_group }}"
+    dest: "{{ netbox_apache2_sites_available_path }}/netbox.conf"
+    owner: "{{ netbox_apache2_user }}"
+    group: "{{ netbox_apache2_group }}"
 
 - name: enable netbox vhost
   file:
-    src: "{{ apache2_sites_available_path }}/netbox.conf"
-    dest: "{{ apache2_sites_enabled_path }}/netbox.conf"
+    src: "{{ netbox_apache2_sites_available_path }}/netbox.conf"
+    dest: "{{ netbox_apache2_sites_enabled_path }}/netbox.conf"
     state: link
   notify:
     - restart apache2

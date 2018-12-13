@@ -35,12 +35,12 @@ netbox_python_binary: /usr/bin/python3.5
 __netbox_postgresql_service: postgresql
 __netbox_postgresql_user: postgres
 
-supervisord_service: supervisor
-supervisord_config_directory: /etc/supervisor/conf.d
+netbox_supervisord_service: supervisor
+netbox_supervisord_config_directory: /etc/supervisor/conf.d
 
-apache2_service: apache2
-apache2_user: www-data
-apache2_group: www-data
-apache2_sites_available_path: /etc/apache2/sites-available
-apache2_sites_enabled_path: /etc/apache2/sites-enabled
-apache2_default_vhost: 000-default.conf
+netbox_apache2_service: apache2
+netbox_apache2_user: www-data
+netbox_apache2_group: www-data
+netbox_apache2_sites_available_path: /etc/apache2/sites-available
+netbox_apache2_sites_enabled_path: /etc/apache2/sites-enabled
+netbox_apache2_default_vhost: 000-default.conf
