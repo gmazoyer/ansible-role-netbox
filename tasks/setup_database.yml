@@ -1,4 +1,9 @@
 ---
+- name: ensure postgresql is ready
+  service:
+    name: postgresql
+    state: started
+
 - name: create postgresql database
   postgresql_db:
     name: "{{ netbox_database }}"
