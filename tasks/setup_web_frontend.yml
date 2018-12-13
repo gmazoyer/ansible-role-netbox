@@ -1,5 +1,4 @@
 ---
-# Setup web frontend if enabled
 - name: enable mod_proxy and mod_proxy_http
   apache2_module:
     state: present

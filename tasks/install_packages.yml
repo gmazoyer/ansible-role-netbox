@@ -1,0 +1,12 @@
+---
+- name: install required packages
+  package:
+    name: "{{ __netbox_required_packages | flatten}}"
+    state: present
+  vars:
+    __netbox_required_packages:
+      - "{{ netbox_python_packages }}"
+      - "{{ netbox_postgresql_packages }}"
+      - "{{ netbox_other_packages }}"
+      - "{{ netbox_web_backend_packages if netbox_setup_web_backend else [] }}"
+      - "{{ netbox_web_frontend_packages if netbox_setup_web_frontend else [] }}"

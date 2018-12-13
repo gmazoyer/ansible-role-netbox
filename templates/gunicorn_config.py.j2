@@ -1,7 +1,0 @@
-# {{ ansible_managed }}
-
-command = '{{ netbox_install_directory }}/bin/gunicorn'
-pythonpath = '{{ netbox_install_directory }}/netbox'
-bind = '{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}'
-workers = {{ netbox_gunicorn_workers_number }}
-user = '{{ netbox_gunicorn_user }}'

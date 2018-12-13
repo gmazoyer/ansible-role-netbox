@@ -1,11 +1,9 @@
 ---
-# Create database and its user
 - name: create postgresql database
   postgresql_db:
     name: "{{ netbox_database }}"
   become: true
-  become_method: "{{ become_method_to_use }}"
-  become_user: "{{ postgresql_user }}"
+  become_user: "{{ __netbox_postgresql_user }}"
 
 - name: create postgresql user
   postgresql_user:
@@ -15,5 +13,4 @@
     db: "{{ netbox_database }}"
     priv: ALL
   become: true
-  become_method: "{{ become_method_to_use }}"
-  become_user: "{{ postgresql_user }}"
+  become_user: "{{ __netbox_postgresql_user }}"

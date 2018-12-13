@@ -1,6 +1,5 @@
 # {{ ansible_managed }}
 
 [program:netbox]
-command = {{ netbox_install_directory }}/bin/gunicorn -c {{ netbox_install_directory }}/gunicorn_config.py netbox.wsgi
-directory = {{ netbox_install_directory }}/netbox/
-user = {{ netbox_supervisor_user }}
+command = {{ netbox_user_home_directory }}/gunicorn_process.sh
+user = {{ netbox_user }}

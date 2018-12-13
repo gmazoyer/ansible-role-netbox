@@ -1,14 +1,27 @@
 ---
-- include: include-vars.yml
+- import_tasks: include_vars.yml
+- import_tasks: install_packages.yml
 
-- include: install-packages.yml
+- name: ensure python 3 is used
+  set_fact:
+    ansible_python_interpreter: "{{ netbox_python_binary }}"
 
-- include: setup-database.yml
+- block:
+  - name: create netbox group
+    group:
+      name: "{{ netbox_group }}"
 
-- include: setup-netbox.yml
+  - name: create netbox user
+    user:
+      name: "{{ netbox_user }}"
+      group: "{{ netbox_group }}"
+      home: "{{ netbox_user_home_directory }}"
 
-- include: setup-web-backend.yml
+- import_tasks: setup_database.yml
+  when: netbox_database_host == 'localhost'
+- import_tasks: setup_netbox.yml
+
+- include: setup_web_backend.yml
   when: netbox_setup_web_backend
-
-- include: setup-web-frontend.yml
+- include: setup_web_frontend.yml
   when: netbox_setup_web_frontend

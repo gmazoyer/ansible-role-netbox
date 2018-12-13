@@ -1,19 +1,20 @@
 ---
-# Setup web backend if enabled
 - name: install gunicorn
   pip:
     name: gunicorn
     extra_args: "--upgrade"
-    virtualenv: "{{ netbox_install_directory }}"
-    virtualenv_python: "{{ netbox_python_binary }}"
+    virtualenv: "{{ netbox_virtualenv_path }}"
+    virtualenv_command: "{{ netbox_python_binary }} -m venv"
+  become: true
+  become_user: "{{ netbox_user }}"
 
 - name: configure gunicorn
   template:
-    src: gunicorn_config.py.j2
-    dest: "{{ netbox_install_directory }}/gunicorn_config.py"
-    owner: root
-    group: root
-    mode: 0644
+    src: gunicorn_process.sh.j2
+    dest: "{{ netbox_user_home_directory }}/gunicorn_process.sh"
+    owner: "{{ netbox_user }}"
+    group: "{{ netbox_group }}"
+    mode: 0755
   register: gunicorn_config
 
 - name: configure supervisord
@@ -34,5 +35,6 @@
   supervisorctl:
     name: netbox
     state: restarted
-  when: gunicorn_config.changed or supervisord_config.changed or
-        netbox_downloaded.changed
+  when: >
+    gunicorn_config.changed or supervisord_config.changed
+    or netbox_downloaded.changed

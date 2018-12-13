@@ -1,5 +1,12 @@
 ---
+- name: restart netbox
+  supervisorctl:
+    name: netbox
+    state: restarted
+  when: netbox_setup_web_backend
+
 - name: restart apache2
   service:
     name: "{{ apache2_service }}"
     state: restarted
+  when: netbox_setup_web_frontend

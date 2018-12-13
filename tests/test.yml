@@ -2,5 +2,7 @@
 
 - hosts: localhost
   remote_user: root
+  vars:
+    netbox_setup_web_backend: true
   roles:
     - role_under_test

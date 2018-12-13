@@ -29,7 +29,7 @@ Setup for the PostgreSQL database:
 
 Where to get NetBox and which version:
 
-    netbox_version: v2.3.4
+    netbox_version: v2.5.1
     netbox_git_url: https://github.com/digitalocean/netbox.git
 
 Where to install NetBox:
@@ -50,15 +50,11 @@ Set the timezone to be used (a list of available TZs can be found
 
     netbox_config_time_zone: UTC
 
-The username and email for the super user. Its password must be set manually
-via the manage.py tool of the application:
+The username, password and email for the super user.
 
     netbox_superuser_username: admin
+    netbox_superuser_password: admin
     netbox_superuser_email: admin@example.com
-
-Force user to login to see data recorded inside NetBox:
-
-    netbox_login_required: false
 
 LDAP can be used as authentication mechanism. It must be enabled, and the whole
 LDAP configuration has to be provided in the following variables (see NetBox
@@ -67,23 +63,32 @@ LDAP configuration has to be provided in the following variables (see NetBox
     netbox_setup_ldap_auth: false
     netbox_ldap_config: ""
 
-NAPALM integration with username and password to be used when connecting to
-devices:
+NAPALM integration, please note that you must set the username and password for
+NAPALM in the configuration otherwise it will not be enabled:
 
     netbox_use_napalm: false
-    netbox_devices_username: ''
-    netbox_devices_password: ''
 
 Whether or not to load the initial data of NetBox:
 
     netbox_load_initial_data: true
+
+The configuration for NetBox must be given as `key: value` pairs like the
+following, please note that the secret key does not need to be given as it will
+be generated automatically:
+
+    netbox_config:
+      ALLOWED_HOSTS:
+        - localhost
+        - 127.0.0.1
+      TIME_ZONE: "Europe/Paris"
+      …
 
 Configuration for the backend web servers:
 
     netbox_setup_web_backend: false
     netbox_gunicorn_address: 127.0.0.1
     netbox_gunicorn_port: 8001
-    netbox_gunicorn_workers_number: 3
+    netbox_gunicorn_workers_number: 4
     netbox_gunicorn_user: root
     netbox_supervisor_user: root
 

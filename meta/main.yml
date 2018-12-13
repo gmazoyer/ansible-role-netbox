@@ -1,17 +1,13 @@
 ---
 galaxy_info:
   author: Guillaume Mazoyer
-  description: A role to install and update Netbox.
+  description: A role to install and update NetBox.
   license: GPL-3+
-  min_ansible_version: 2.1.0
+  min_ansible_version: 2.5.0
   platforms:
     - name: Debian
       versions:
         - stretch
-    - name: Ubuntu
-      versions:
-        - xenial
-        - bionic
   galaxy_tags:
     - system
     - networking

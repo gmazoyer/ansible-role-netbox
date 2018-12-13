@@ -1,0 +1,147 @@
+---
+- name: check if there is an existing installation
+  stat:
+    path: "{{ netbox_install_directory }}"
+  register: netbox_installed
+
+- name: create the install directory
+  file:
+    path: "{{ netbox_install_directory }}"
+    owner: "{{ netbox_user }}"
+    group: "{{ netbox_group }}"
+    state: directory
+  when : not netbox_installed.stat.exists
+
+- name: download using git
+  git:
+    repo: "{{ netbox_git_url }}"
+    version: "{{ netbox_version }}"
+    dest: "{{ netbox_install_directory }}"
+  become: true
+  become_user: "{{ netbox_user }}"
+  register: netbox_downloaded
+
+- name: upgrade pip in virtualenv
+  pip:
+    name: pip
+    extra_args: "--upgrade"
+    virtualenv: "{{ netbox_virtualenv_path }}"
+    virtualenv_command: "{{ netbox_python_binary }} -m venv"
+  become: true
+  become_user: "{{ netbox_user }}"
+
+- name: install napalm for pulling devices info
+  pip:
+    name: napalm
+    extra_args: "--upgrade"
+    virtualenv: "{{ netbox_virtualenv_path }}"
+    virtualenv_command: "{{ netbox_python_binary }} -m venv"
+  become: true
+  become_user: "{{ netbox_user }}"
+  when: >
+    netbox_use_napalm
+    and (netbox_config.NAPALM_USERNAME is defined)
+    and (netbox_config.NAPALM_PASSWORD is defined)
+
+- block:
+  - name: delete stale bytecode
+    command: find . -name '*.pyc' -delete
+    args:
+      chdir: "{{ netbox_install_directory }}"
+
+  - name: install python requirements
+    pip:
+      requirements: "{{ netbox_install_directory }}/requirements.txt"
+      extra_args: "--upgrade"
+      virtualenv: "{{ netbox_virtualenv_path }}"
+      virtualenv_command: "{{ netbox_python_binary }} -m venv"
+    become: true
+    become_user: "{{ netbox_user }}"
+    notify:
+      - restart netbox
+  when: netbox_downloaded.changed
+
+- block:
+  - name: generate a secret key
+    shell: "{{ netbox_python_binary }} {{ netbox_install_directory }}/netbox/generate_secret_key.py | tr -d $'\n' > {{ netbox_user_home_directory }}/secret.key"
+    args:
+      creates: "{{ netbox_user_home_directory }}/secret.key"
+    become: true
+    become_user: "{{ netbox_user }}"
+
+  - name: load secret key
+    slurp:
+      src: "{{ netbox_user_home_directory }}/secret.key"
+    register: __netbox_secret_key_file
+
+  - name: set secret key in configuration
+    set_fact:
+      netbox_config: "{{ netbox_config | combine({'SECRET_KEY': __netbox_secret_key_file['content'] | b64decode}) }}"
+
+- name: configure netbox
+  template:
+    src: configuration.py.j2
+    dest: "{{ netbox_install_directory }}/netbox/netbox/configuration.py"
+    owner: "{{ netbox_user }}"
+    group: "{{ netbox_group }}"
+    mode: 0644
+  notify:
+    - restart netbox
+
+- block:
+  - name: install django-auth-ldap
+    pip:
+      name: django-auth-ldap
+      extra_args: "--upgrade"
+      virtualenv: "{{ netbox_virtualenv_path }}"
+      virtualenv_command: "{{ netbox_python_binary }} -m venv"
+    become: true
+    become_user: "{{ netbox_user }}"
+  - name: configure ldap auth
+    copy:
+      content: "{{ netbox_ldap_config }}"
+      dest: "{{ netbox_install_directory }}/netbox/netbox/ldap_config.py"
+      owner: "{{ netbox_user }}"
+      group: "{{ netbox_group }}"
+      mode: 0644
+    notify:
+      - restart netbox
+  when: netbox_setup_ldap_auth
+
+- block:
+  - name: perform database migration
+    django_manage:
+      app_path: "{{ netbox_install_directory }}/netbox"
+      command: migrate
+      virtualenv: "{{ netbox_virtualenv_path }}"
+    become: true
+    become_user: "{{ netbox_user }}"
+    notify:
+      - restart netbox
+  - name: collect static files
+    django_manage:
+      app_path: "{{ netbox_install_directory }}/netbox"
+      command: collectstatic
+      clear: yes
+      virtualenv: "{{ netbox_virtualenv_path }}"
+    become: true
+    become_user: "{{ netbox_user }}"
+  when: netbox_downloaded.changed
+
+- block:
+  - name: create super user
+    shell: "printf '{{ netbox_superuser_script }}' | {{ netbox_virtualenv_path }}/bin/python {{ netbox_install_directory }}/netbox/manage.py shell"
+    become: true
+    become_user: "{{ netbox_user }}"
+    register: __netbox_superuser_result
+    changed_when: "'changed' in __netbox_superuser_result.stdout"
+  - name: load initial data
+    django_manage:
+      app_path: "{{ netbox_install_directory }}/netbox"
+      command: loaddata
+      fixtures: initial_data
+      virtualenv: "{{ netbox_virtualenv_path }}"
+    become: true
+    become_user: "{{ netbox_user }}"
+    when: netbox_load_initial_data
+  when: not netbox_installed.stat.exists

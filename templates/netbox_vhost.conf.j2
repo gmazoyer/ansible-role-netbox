@@ -1,10 +1,10 @@
 # {{ ansible_managed }}
 
-{% for host in netbox_config_allowed_hosts %}
+{% for host in netbox_config.ALLOWED_HOSTS %}
 <VirtualHost *:80>
   ServerName {{ host }}
 
-  Alias /static {{ netbox_install_directory}}/netbox/static
+  Alias /static {{ netbox_install_directory }}/netbox/static
 
   # Needed to allow token-based API authentication
   WSGIPassAuthorization on

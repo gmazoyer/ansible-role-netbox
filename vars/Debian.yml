@@ -1,42 +1,39 @@
 ---
-__postgresql_packages:
+__netbox_python_packages:
+  - python3.5
+  - python3.5-dev
+  - python3-venv
+  - python3-pip
+  - python3-psycopg2
+__netbox_postgresql_packages:
   - postgresql
   - libpq-dev
   - python-psycopg2
 
-__dependencies_packages:
+__netbox_other_packages:
   - git
-  - python3.5
-  - python3.5-dev
-  - python3-pip
   - libxml2-dev
   - libxslt1-dev
   - libffi-dev
   - libjpeg-dev
   - graphviz
-  - libpq-dev
   - libssl-dev
-  - zlib1g-dev
 
-__ldap_packages:
+__netbox_ldap_packages:
   - libldap2-dev
   - libsasl2-dev
 
-__web_backend_packages:
+__netbox_web_backend_packages:
   - supervisor
-
-__web_frontend_packages:
+__netbox_web_frontend_packages:
   - apache2
   - apache2-utils
   - libapache2-mod-wsgi
 
 netbox_python_binary: /usr/bin/python3.5
-netbox_pip_binary: pip3
 
-become_method_to_use: su
-
-postgresql_service: postgresql
-postgresql_user: postgres
+__netbox_postgresql_service: postgresql
+__netbox_postgresql_user: postgres
 
 supervisord_service: supervisor
 supervisord_config_directory: /etc/supervisor/conf.d
