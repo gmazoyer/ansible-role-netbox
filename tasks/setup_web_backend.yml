@@ -15,7 +15,8 @@
     owner: "{{ netbox_user }}"
     group: "{{ netbox_group }}"
     mode: 0755
-  register: gunicorn_config
+  notify:
+    - restart netbox
 
 - name: configure supervisord
   template:
@@ -24,18 +25,10 @@
     owner: root
     group: root
     mode: 0644
-  register: supervisord_config
+  notify:
+    - restart netbox
 
 - name: ensure supervisord is started
   service:
     name: "{{ netbox_supervisord_service }}"
     state: started
-
-- name: restart supervisord
-  supervisorctl:
-    name: netbox
-    state: restarted
-  when: >
-    gunicorn_config.changed
-    or supervisord_config.changed
-    or netbox_downloaded.changed

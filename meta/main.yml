@@ -19,4 +19,4 @@ galaxy_info:
     - django
 
 dependencies: []
-allow_duplicates: yes
+allow_duplicates: true

@@ -10,7 +10,7 @@
     owner: "{{ netbox_user }}"
     group: "{{ netbox_group }}"
     state: directory
-  when : not netbox_installed.stat.exists
+  when: not netbox_installed.stat.exists
 
 - name: download using git
   git:
@@ -30,7 +30,7 @@
   become: true
   become_user: "{{ netbox_user }}"
 
-- name: install napalm for pulling devices info
+- name: install napalm to get devices info
   pip:
     name: napalm
     extra_args: "--upgrade"
@@ -48,6 +48,8 @@
     command: find . -name '*.pyc' -delete
     args:
       chdir: "{{ netbox_install_directory }}"
+    notify:
+      - restart netbox
 
   - name: install python requirements
     pip:
@@ -122,7 +124,7 @@
     django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
       command: collectstatic
-      clear: yes
+      clear: true
       virtualenv: "{{ netbox_virtualenv_path }}"
     become: true
     become_user: "{{ netbox_user }}"
