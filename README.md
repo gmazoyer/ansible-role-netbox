@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/respawner/ansible-role-netbox.svg?branch=master)](https://travis-ci.org/respawner/ansible-role-netbox)
+[![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-netbox-blue.svg)](https://galaxy.ansible.com/respawner/netbox)
 
 # Ansible Role: NetBox
 
@@ -9,8 +10,7 @@ database. So it can be used to setup a NetBox appliance including everything in
 the same machine.
 
 Web backend and frontend setups can be disabled if you already have your own
-way to handle them. The database setup however needs some work to be able to
-use a PostgreSQL database located on another machine.
+way to handle them.
 
 ## Dependencies
 
@@ -25,7 +25,7 @@ Setup for the PostgreSQL database:
     netbox_database: netbox
     netbox_database_user: netbox
     netbox_database_password: netbox
-    netbox_database_host: localhost
+    netbox_database_host: localhost # This will force PostgreSQL to be setup
 
 Where to get NetBox and which version:
 

@@ -1,7 +1,7 @@
 ---
 - name: install required packages
   package:
-    name: "{{ __netbox_required_packages | flatten}}"
+    name: "{{ __netbox_required_packages | flatten }}"
     state: present
   vars:
     __netbox_required_packages:
