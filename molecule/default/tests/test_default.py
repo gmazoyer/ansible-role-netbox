@@ -9,8 +9,8 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_hosts_all(host):
     # Check if NetBox has been installed in the right directory
-    f = host.file("/opt/netbox/")
+    netbox_install_directory = host.file("/opt/netbox/")
 
-    assert f.exists
-    assert f.user == "netbox"
-    assert f.group == "netbox"
+    assert netbox_install_directory.exists
+    assert netbox_install_directory.user == "netbox"
+    assert netbox_install_directory.group == "netbox"
