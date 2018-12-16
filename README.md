@@ -89,7 +89,10 @@ Whether or not to configure the frontend web server:
 ## License
 
 This Ansible Role is released under the terms of the GNU GPLv3. Please read
-the LICENSE file for more information.
+the `LICENSE` file for more information.
+
+Portions of this role include MIT-licensed code (see `7c400dd`) and are
+demarcated in the header. See `LICENSE-MIT` for more information.
 
 ## Author Information
 
