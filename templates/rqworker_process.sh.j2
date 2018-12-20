@@ -2,11 +2,10 @@
 
 # {{ ansible_managed }}
 
-NAME="netbox"
+NAME="netbox-rqworker"
 DJANGODIR={{ netbox_install_directory }}/netbox/
 USER={{ netbox_user }}
 GROUP={{ netbox_group }}
-NUM_WORKERS={{ netbox_gunicorn_workers_number }}
 DJANGO_SETTINGS_MODULE=netbox.settings
 
 echo "Starting ${NAME} as $(whoami)"
@@ -17,10 +16,4 @@ export DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
 export PYTHONPATH=${DJANGODIR}:${PYTHONPATH}
 
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
-exec {{ netbox_virtualenv_path }}/bin/gunicorn ${NAME}.wsgi:application \
-  --name ${NAME} \
-  --workers ${NUM_WORKERS} \
-  --user=${USER} --group=${GROUP} \
-  --bind '{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}'
-  --log-level=debug \
-  --log-file=-
+exec python ${DJANGODIR}/manage.py rqworker

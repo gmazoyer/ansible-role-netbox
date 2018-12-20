@@ -5,6 +5,12 @@
     state: restarted
   when: netbox_setup_web_backend
 
+- name: restart netbox rqworker
+  supervisorctl:
+    name: netbox-rqworker
+    state: restarted
+  when: netbox_setup_web_backend and netbox_use_webhooks
+
 - name: restart apache2
   service:
     name: "{{ netbox_apache2_service }}"

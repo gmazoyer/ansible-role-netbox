@@ -54,6 +54,11 @@ NAPALM in the configuration otherwise it will not be enabled:
 
     netbox_use_napalm: false
 
+Redis integration, this is used for enabling webhooks and requires
+configuration settings to be set to:
+
+    netbox_use_webhooks: false
+
 Whether or not to load the initial data of NetBox:
 
     netbox_load_initial_data: true

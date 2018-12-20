@@ -18,7 +18,19 @@
   notify:
     - restart netbox
 
-- name: configure supervisord
+- name: configure rqworker
+  template:
+    src: rqworker_process.sh.j2
+    dest: "{{ netbox_user_home_directory }}/rqworker_process.sh"
+    owner: "{{ netbox_user }}"
+    group: "{{ netbox_group }}"
+    mode: 0755
+  notify:
+    - restart netbox
+    - restart netbox rqworker
+  when: netbox_use_webhooks
+
+- name: configure supervisord (netbox)
   template:
     src: netbox.conf.j2
     dest: "{{ netbox_supervisord_config_directory }}/netbox.conf"
@@ -27,6 +39,18 @@
     mode: 0644
   notify:
     - restart netbox
+
+- name: configure supervisord (rqworker)
+  template:
+    src: netbox.conf.j2
+    dest: "{{ netbox_supervisord_config_directory }}/netbox-rqworker.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart netbox
+    - restart netbox rqworker
+  when: netbox_use_webhooks
 
 - name: ensure supervisord is started
   service:

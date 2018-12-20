@@ -21,6 +21,9 @@ netbox_load_initial_data: true
 # NAPALM integration
 netbox_use_napalm: false
 
+# Webhooks using Redis
+netbox_use_webhooks: false
+
 # LDAP authentication
 netbox_setup_ldap_auth: false
 # LDAP configuration, can be used like

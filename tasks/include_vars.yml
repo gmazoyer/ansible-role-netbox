@@ -17,6 +17,11 @@
     netbox_postgresql_packages: "{{ __netbox_postgresql_packages | list }}"
   when: netbox_postgresql_packages is not defined
 
+- name: define redis packages
+  set_fact:
+    netbox_redis_packages: "{{ __netbox_redis_packages | list }}"
+  when: netbox_redis_packages is not defined
+
 - name: define other packages
   set_fact:
     netbox_other_packages: "{{ __netbox_other_packages | list }}"
