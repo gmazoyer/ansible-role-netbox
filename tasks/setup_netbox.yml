@@ -31,6 +31,8 @@
     virtualenv_command: "{{ netbox_python_binary }} -m venv"
   become: true
   become_user: "{{ netbox_user }}"
+  register: pip_result
+  until: pip_result is success
 
 - name: install napalm to get devices info
   pip:
@@ -40,6 +42,8 @@
     virtualenv_command: "{{ netbox_python_binary }} -m venv"
   become: true
   become_user: "{{ netbox_user }}"
+  register: pip_result
+  until: pip_result is success
   when: >
     netbox_use_napalm
     and (netbox_config.NAPALM_USERNAME is defined)
@@ -53,6 +57,8 @@
     virtualenv_command: "{{ netbox_python_binary }} -m venv"
   become: true
   become_user: "{{ netbox_user }}"
+  register: pip_result
+  until: pip_result is success
   when: >
     netbox_use_webhooks
     and (WEBHOOKS_ENABLED is defined)
@@ -74,6 +80,8 @@
       virtualenv_command: "{{ netbox_python_binary }} -m venv"
     become: true
     become_user: "{{ netbox_user }}"
+    register: pip_result
+    until: pip_result is success
     notify:
       - restart netbox
   when: netbox_downloaded.changed
@@ -114,6 +122,8 @@
       virtualenv_command: "{{ netbox_python_binary }} -m venv"
     become: true
     become_user: "{{ netbox_user }}"
+    register: pip_result
+    until: pip_result is success
   - name: configure ldap auth
     copy:
       content: "{{ netbox_ldap_config }}"
