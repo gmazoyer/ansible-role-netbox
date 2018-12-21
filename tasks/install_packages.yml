@@ -1,4 +1,5 @@
 ---
+# Copyright (c) 2018 Guillaume Mazoyer under the GPL License
 # Copyright (c) 2017-2018 Musee "lae" Ullah under the MIT License
 - name: install required packages
   package:
@@ -12,3 +13,5 @@
       - "{{ netbox_other_packages }}"
       - "{{ netbox_web_backend_packages if netbox_setup_web_backend else [] }}"
       - "{{ netbox_web_frontend_packages if netbox_setup_web_frontend else [] }}"
+  register: package_result
+  until: package_result is success
