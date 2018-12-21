@@ -8,6 +8,8 @@
       apt:
         update_cache: true
         cache_valid_time: 600
+      register: package_result
+      until: package_result is success
       when: ansible_os_family == 'Debian'
 
   vars:
