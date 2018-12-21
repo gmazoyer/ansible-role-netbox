@@ -7,6 +7,8 @@
     virtualenv_command: "{{ netbox_python_binary }} -m venv"
   become: true
   become_user: "{{ netbox_user }}"
+  register: pip_result
+  until: pip_result is success
 
 - name: configure gunicorn
   template:
