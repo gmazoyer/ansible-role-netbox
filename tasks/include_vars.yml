@@ -22,6 +22,11 @@
     netbox_redis_packages: "{{ __netbox_redis_packages | list }}"
   when: netbox_redis_packages is not defined
 
+- name: define ldap packages
+  set_fact:
+    netbox_ldap_packages: "{{ __netbox_ldap_packages | list }}"
+  when: netbox_ldap_packages is not defined
+
 - name: define other packages
   set_fact:
     netbox_other_packages: "{{ __netbox_other_packages | list }}"

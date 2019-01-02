@@ -1,5 +1,5 @@
 ---
-# Copyright (c) 2017-2018 Guillaume Mazoyer under the GPL
+# Copyright (c) 2017-2019 Guillaume Mazoyer under the GPL
 # Copyright (c) 2017-2018 Musee "lae" Ullah under the MIT License
 - name: check if there is an existing installation
   stat:

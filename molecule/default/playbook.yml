@@ -13,6 +13,7 @@
       when: ansible_os_family == 'Debian'
 
   vars:
+    netbox_setup_ldap_auth: true
     netbox_setup_web_backend: true
     netbox_setup_web_frontend: true
 
