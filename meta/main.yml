@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: netbox
   author: Guillaume Mazoyer
   description: A role to install and update NetBox.
   license: GPL-3+, MIT
