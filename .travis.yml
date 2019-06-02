@@ -10,7 +10,7 @@ env:
     - MOLECULE_DISTRO: ubuntu1804
 
 install:
-  - pip install ansible<2.8
+  - pip install "ansible<2.8"
   - pip install molecule docker
 
 script:
