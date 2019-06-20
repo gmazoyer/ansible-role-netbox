@@ -52,7 +52,7 @@
   notify:
     - restart netbox
     - restart netbox rqworker
-  when: netbox_use_webhooks
+  when: netbox_use_webhooks|bool
 
 - name: ensure supervisord is started
   service:

@@ -22,6 +22,6 @@
 - import_tasks: setup_netbox.yml
 
 - include: setup_web_backend.yml
-  when: netbox_setup_web_backend
+  when: netbox_setup_web_backend|bool
 - include: setup_web_frontend.yml
-  when: netbox_setup_web_frontend
+  when: netbox_setup_web_frontend|bool

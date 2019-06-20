@@ -133,7 +133,7 @@
       mode: 0644
     notify:
       - restart netbox
-  when: netbox_setup_ldap_auth
+  when: netbox_setup_ldap_auth|bool
 
 - block:
   - name: perform database migration
@@ -170,5 +170,5 @@
       virtualenv: "{{ netbox_virtualenv_path }}"
     become: true
     become_user: "{{ netbox_user }}"
-    when: netbox_load_initial_data
+    when: netbox_load_initial_data|bool
   when: not netbox_installed.stat.exists
