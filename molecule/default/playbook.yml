@@ -13,9 +13,10 @@
       when: ansible_os_family == 'Debian'
 
   vars:
-    netbox_setup_ldap_auth: false
+    netbox_setup_ldap_auth: true
     netbox_setup_web_backend: true
     netbox_setup_web_frontend: true
+    netbox_ldap_config: "AUTH_LDAP_SERVER_URI = '127.0.0.1'"
 
   roles:
     - role: ansible-role-netbox

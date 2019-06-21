@@ -3,16 +3,16 @@
   supervisorctl:
     name: netbox
     state: restarted
-  when: netbox_setup_web_backend
+  when: netbox_setup_web_backend|bool
 
 - name: restart netbox rqworker
   supervisorctl:
     name: netbox-rqworker
     state: restarted
-  when: netbox_setup_web_backend
+  when: netbox_setup_web_backend|bool
 
 - name: restart apache2
   service:
     name: "{{ netbox_apache2_service }}"
     state: restarted
-  when: netbox_setup_web_frontend
+  when: netbox_setup_web_frontend|bool
