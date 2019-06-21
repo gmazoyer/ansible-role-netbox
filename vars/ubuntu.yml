@@ -37,6 +37,9 @@ netbox_python_binary: /usr/bin/python3.6
 __netbox_postgresql_service: postgresql
 __netbox_postgresql_user: postgres
 
+netbox_redis_service: redis-server
+netbox_redis_configuration: /etc/redis/redis.conf
+
 netbox_supervisord_service: supervisor
 netbox_supervisord_config_directory: /etc/supervisor/conf.d
 

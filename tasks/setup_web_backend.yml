@@ -1,4 +1,17 @@
 ---
+- block:
+  - name: link redis to systemd
+    lineinfile:
+      path: "{{ netbox_redis_configuration }}"
+      regexp: "^supervised"
+      line: "supervised systemd"
+
+  - name: ensure redis is started
+    service:
+      name: "{{ netbox_redis_service }}"
+      state: started
+      enabled: true
+
 - name: install gunicorn
   pip:
     name: gunicorn
@@ -30,7 +43,6 @@
   notify:
     - restart netbox
     - restart netbox rqworker
-  when: netbox_use_webhooks
 
 - name: configure supervisord (netbox)
   template:
@@ -44,7 +56,7 @@
 
 - name: configure supervisord (rqworker)
   template:
-    src: netbox.conf.j2
+    src: netbox-rqworker.conf.j2
     dest: "{{ netbox_supervisord_config_directory }}/netbox-rqworker.conf"
     owner: root
     group: root
@@ -52,7 +64,6 @@
   notify:
     - restart netbox
     - restart netbox rqworker
-  when: netbox_use_webhooks|bool
 
 - name: ensure supervisord is started
   service:

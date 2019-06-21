@@ -49,21 +49,6 @@
     and (netbox_config.NAPALM_USERNAME is defined)
     and (netbox_config.NAPALM_PASSWORD is defined)
 
-- name: install django-rq for webhooks
-  pip:
-    name: django-rq
-    extra_args: "--upgrade"
-    virtualenv: "{{ netbox_virtualenv_path }}"
-    virtualenv_command: "{{ netbox_python_binary }} -m venv"
-  become: true
-  become_user: "{{ netbox_user }}"
-  register: pip_result
-  until: pip_result is success
-  when: >
-    netbox_use_webhooks
-    and (WEBHOOKS_ENABLED is defined)
-    and (netbox_config.REDIS is defined)
-
 - block:
   - name: delete stale bytecode
     command: find . -name '*.pyc' -delete

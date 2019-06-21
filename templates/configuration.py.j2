@@ -1,10 +1,22 @@
 {# Copyright (c) 2017-2018 Musee "lae" Ullah under the MIT License #}
+{# # Copyright (c) 2017-2019 Guillaume Mazoyer under the GPL #}
+# {{ ansible_managed }}
+
 DATABASE = {
     'NAME': '{{ netbox_database }}',
     'USER': '{{ netbox_database_user }}',
     'PASSWORD': '{{ netbox_database_password }}',
     'HOST': '{{ netbox_database_host }}',
     'PORT': '{{ netbox_database_port | default('') }}',
+}
+REDIS = {
+    'HOST': 'localhost',
+    'PORT': 6379,
+    'PASSWORD': '',
+    'DATABASE': 0,
+    'CACHE_DATABASE': 1,
+    'DEFAULT_TIMEOUT': 300,
+    'SSL': False,
 }
 
 {% for setting, value in netbox_config.items() %}

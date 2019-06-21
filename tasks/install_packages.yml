@@ -9,7 +9,7 @@
     __netbox_required_packages:
       - "{{ netbox_python_packages }}"
       - "{{ netbox_postgresql_packages }}"
-      - "{{ netbox_redis_packages if netbox_use_webhooks else [] }}"
+      - "{{ netbox_redis_packages }}"
       - "{{ netbox_ldap_packages if netbox_setup_ldap_auth else [] }}"
       - "{{ netbox_other_packages }}"
       - "{{ netbox_web_backend_packages if netbox_setup_web_backend else [] }}"

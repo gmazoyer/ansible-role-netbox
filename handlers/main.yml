@@ -9,7 +9,7 @@
   supervisorctl:
     name: netbox-rqworker
     state: restarted
-  when: netbox_setup_web_backend and netbox_use_webhooks
+  when: netbox_setup_web_backend
 
 - name: restart apache2
   service:
