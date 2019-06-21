@@ -1,17 +1,4 @@
 ---
-- block:
-  - name: link redis to systemd
-    lineinfile:
-      path: "{{ netbox_redis_configuration }}"
-      regexp: "^supervised"
-      line: "supervised systemd"
-
-  - name: ensure redis is started
-    service:
-      name: "{{ netbox_redis_service }}"
-      state: started
-      enabled: true
-
 - name: install gunicorn
   pip:
     name: gunicorn
