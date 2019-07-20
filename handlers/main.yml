@@ -10,6 +10,8 @@
     name: netbox-rqworker
     state: restarted
   when: netbox_setup_web_backend|bool
+        and (netbox_config.WEBHOOKS_ENABLED is defined)
+        and (netbox_config.WEBHOOKS_ENABLED|bool == true)
 
 - name: restart apache2
   service:
