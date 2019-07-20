@@ -49,26 +49,18 @@
     and (netbox_config.NAPALM_USERNAME is defined)
     and (netbox_config.NAPALM_PASSWORD is defined)
 
-- block:
-  - name: delete stale bytecode
-    command: find . -name '*.pyc' -delete
-    args:
-      chdir: "{{ netbox_install_directory }}"
-    notify:
-      - restart netbox
-
-  - name: install python requirements
-    pip:
-      requirements: "{{ netbox_install_directory }}/requirements.txt"
-      extra_args: "--upgrade"
-      virtualenv: "{{ netbox_virtualenv_path }}"
-      virtualenv_command: "{{ netbox_python_binary }} -m venv"
-    become: true
-    become_user: "{{ netbox_user }}"
-    register: pip_result
-    until: pip_result is success
-    notify:
-      - restart netbox
+- name: install python requirements
+  pip:
+    requirements: "{{ netbox_install_directory }}/requirements.txt"
+    extra_args: "--upgrade"
+    virtualenv: "{{ netbox_virtualenv_path }}"
+    virtualenv_command: "{{ netbox_python_binary }} -m venv"
+  become: true
+  become_user: "{{ netbox_user }}"
+  register: pip_result
+  until: pip_result is success
+  notify:
+    - restart netbox
   when: netbox_downloaded.changed
 
 - block:
