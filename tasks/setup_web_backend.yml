@@ -31,7 +31,7 @@
     - restart netbox
     - restart netbox rqworker
   when: (netbox_config.WEBHOOKS_ENABLED is defined)
-        and (netbox_config.WEBHOOKS_ENABLED|bool == true)
+        and netbox_config.WEBHOOKS_ENABLED|bool
 
 - name: configure supervisord (netbox)
   template:
