@@ -122,6 +122,15 @@
     become_user: "{{ netbox_user }}"
     notify:
       - restart netbox
+  - name: remove stale content types
+    django_manage:
+      app_path: "{{ netbox_install_directory }}/netbox"
+      command: remove_stale_contenttypes
+      virtualenv: "{{ netbox_virtualenv_path }}"
+    become: true
+    become_user: "{{ netbox_user }}"
+    notify:
+      - restart netbox
   - name: collect static files
     django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
