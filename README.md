@@ -54,10 +54,6 @@ NAPALM in the configuration otherwise it will not be enabled:
 
     netbox_use_napalm: false
 
-Whether or not to load the initial data of NetBox:
-
-    netbox_load_initial_data: true
-
 The configuration for NetBox must be given as `key: value` pairs like the
 following, please note that the secret key does not need to be given as it will
 be generated automatically:

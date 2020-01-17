@@ -141,20 +141,9 @@
     become_user: "{{ netbox_user }}"
   when: netbox_downloaded.changed
 
-- block:
-  - name: create super user
-    shell: "printf '{{ netbox_superuser_script }}' | {{ netbox_virtualenv_path }}/bin/python {{ netbox_install_directory }}/netbox/manage.py shell"
-    become: true
-    become_user: "{{ netbox_user }}"
-    register: __netbox_superuser_result
-    changed_when: "'changed' in __netbox_superuser_result.stdout"
-  - name: load initial data
-    django_manage:
-      app_path: "{{ netbox_install_directory }}/netbox"
-      command: loaddata
-      fixtures: initial_data
-      virtualenv: "{{ netbox_virtualenv_path }}"
-    become: true
-    become_user: "{{ netbox_user }}"
-    when: netbox_load_initial_data|bool
-  when: not netbox_installed.stat.exists
+- name: create super user
+  shell: "printf '{{ netbox_superuser_script }}' | {{ netbox_virtualenv_path }}/bin/python {{ netbox_install_directory }}/netbox/manage.py shell"
+  become: true
+  become_user: "{{ netbox_user }}"
+  register: __netbox_superuser_result
+  changed_when: "'changed' in __netbox_superuser_result.stdout"
