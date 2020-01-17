@@ -1,5 +1,5 @@
 {# Copyright (c) 2017-2018 Musee "lae" Ullah under the MIT License #}
-{# # Copyright (c) 2017-2019 Guillaume Mazoyer under the GPL #}
+{# # Copyright (c) 2017-2020 Guillaume Mazoyer under the GPL #}
 # {{ ansible_managed }}
 
 DATABASE = {
@@ -10,13 +10,22 @@ DATABASE = {
     'PORT': '{{ netbox_database_port | default('') }}',
 }
 REDIS = {
-    'HOST': 'localhost',
-    'PORT': 6379,
-    'PASSWORD': '',
-    'DATABASE': 0,
-    'CACHE_DATABASE': 1,
-    'DEFAULT_TIMEOUT': 300,
-    'SSL': False,
+    'webhooks': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'PASSWORD': '',
+        'DATABASE': 0,
+        'DEFAULT_TIMEOUT': 300,
+        'SSL': False,
+    },
+    'caching': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'PASSWORD': '',
+        'DATABASE': 1,
+        'DEFAULT_TIMEOUT': 300,
+        'SSL': False,
+    }
 }
 
 {% for setting, value in netbox_config.items() %}
