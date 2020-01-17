@@ -17,6 +17,12 @@
       group: "{{ netbox_group }}"
       home: "{{ netbox_user_home_directory }}"
 
+  - name: ensure redis is ready
+    service:
+      name: redis-server
+      state: started
+
+
 - import_tasks: setup_database.yml
   when: netbox_database_host == 'localhost'
 - import_tasks: setup_netbox.yml
