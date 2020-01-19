@@ -29,7 +29,7 @@ Setup for the PostgreSQL database:
 
 Where to get NetBox and which version:
 
-    netbox_version: v2.6.12
+    netbox_version: v2.7.0
     netbox_git_url: https://github.com/digitalocean/netbox.git
 
 Where to install NetBox:
@@ -53,10 +53,6 @@ NAPALM integration, please note that you must set the username and password for
 NAPALM in the configuration otherwise it will not be enabled:
 
     netbox_use_napalm: false
-
-Whether or not to load the initial data of NetBox:
-
-    netbox_load_initial_data: true
 
 The configuration for NetBox must be given as `key: value` pairs like the
 following, please note that the secret key does not need to be given as it will

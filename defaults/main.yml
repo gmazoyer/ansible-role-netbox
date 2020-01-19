@@ -1,6 +1,6 @@
 ---
 # Git URL and version to use, version must be a Git tag
-netbox_version: v2.6.12
+netbox_version: v2.7.0
 netbox_git_url: https://github.com/netbox-community/netbox.git
 
 # Where to install Netbox
@@ -16,7 +16,6 @@ netbox_user_home_directory: /home/netbox
 netbox_superuser_username: admin
 netbox_superuser_password: admin
 netbox_superuser_email: admin@example.com
-netbox_load_initial_data: true
 
 # NAPALM integration
 netbox_use_napalm: false
