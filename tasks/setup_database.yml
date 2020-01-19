@@ -19,3 +19,8 @@
     priv: ALL
   become: true
   become_user: "{{ __netbox_postgresql_user }}"
+
+- name: ensure redis is ready
+  service:
+    name: "{{ netbox_redis_service }}"
+    state: started

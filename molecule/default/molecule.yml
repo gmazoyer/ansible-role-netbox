@@ -9,7 +9,7 @@ lint:
     config-file: molecule/default/yamllint.yml
 platforms:
   - name: instance
-    image: gmazoyer/ansible-docker-${MOLECULE_DISTRO:-debian9}
+    image: gmazoyer/ansible-docker-${MOLECULE_DISTRO:-debian10}
     command: ${MOLECULE_DOCKER_COMMAND-"bash -c 'while true; do sleep 1; done'"}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
