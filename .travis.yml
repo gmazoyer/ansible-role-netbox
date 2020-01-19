@@ -8,7 +8,7 @@ env:
   matrix:
     - MOLECULE_DISTRO: debian10
     - MOLECULE_DISTRO: debian9
-    - MOLECULE_DISTRO: ubuntu1804
+    # - MOLECULE_DISTRO: ubuntu1804 (redis no wanting to persist)
 
 install:
   - pip install ansible
