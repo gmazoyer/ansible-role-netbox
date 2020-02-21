@@ -22,3 +22,4 @@ scenario:
 verifier:
   name: testinfra
   lint: flake8
+  directory: molecule/default/tests/
