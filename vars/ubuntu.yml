@@ -1,14 +1,13 @@
 ---
 __netbox_python_packages:
-  - python3.6
-  - python3.6-dev
+  - python3.8
+  - python3.8-dev
   - python3-venv
   - python3-pip
-  - python3-psycopg2
 __netbox_postgresql_packages:
   - postgresql
   - libpq-dev
-  - python-psycopg2
+  - python3-psycopg2
 __netbox_redis_packages:
   - redis-server
 
@@ -32,7 +31,7 @@ __netbox_web_frontend_packages:
   - apache2-utils
   - libapache2-mod-wsgi
 
-netbox_python_binary: /usr/bin/python3.6
+netbox_python_binary: /usr/bin/python3.8
 
 __netbox_postgresql_service: postgresql
 __netbox_postgresql_user: postgres

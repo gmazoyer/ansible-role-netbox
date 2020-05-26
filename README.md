@@ -29,7 +29,7 @@ Setup for the PostgreSQL database:
 
 Where to get NetBox and which version:
 
-    netbox_version: v2.8.3
+    netbox_version: v2.8.5
     netbox_git_url: https://github.com/digitalocean/netbox.git
 
 Where to install NetBox:

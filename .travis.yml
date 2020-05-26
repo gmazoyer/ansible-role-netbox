@@ -7,7 +7,7 @@ env:
     - ROLE_NAME: netbox
   matrix:
     - MOLECULE_DISTRO: debian10
-    # - MOLECULE_DISTRO: ubuntu1804 (redis no wanting to persist)
+    - MOLECULE_DISTRO: ubuntu2004
 
 install:
   - pip install ansible
