@@ -49,10 +49,12 @@ LDAP configuration has to be provided in the following variables (see NetBox
     netbox_setup_ldap_auth: false
     netbox_ldap_config: ""
 
-NAPALM integration, please note that you must set the username and password for
-NAPALM in the configuration otherwise it will not be enabled:
+Other Python packages can be installed using `local_requirements.txt`, this is
+useful to install packages such as NAPALM or plugins:
 
-    netbox_use_napalm: false
+    netbox_local_requirements:
+      - napalm
+      …
 
 The configuration for NetBox must be given as `key: value` pairs like the
 following, please note that the secret key does not need to be given as it will

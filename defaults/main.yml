@@ -17,8 +17,8 @@ netbox_superuser_username: admin
 netbox_superuser_password: admin
 netbox_superuser_email: admin@example.com
 
-# NAPALM integration
-netbox_use_napalm: false
+# Python local requirements to enable some features such as napalm or plugins
+netbox_local_requirements: []
 
 # LDAP authentication
 netbox_setup_ldap_auth: false
