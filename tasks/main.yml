@@ -21,7 +21,8 @@
   when: netbox_database_host == 'localhost'
 - import_tasks: setup_netbox.yml
 
-- include: setup_web_backend.yml
-  when: netbox_setup_web_backend|bool
+- include: setup_systemd.yml
+  when: netbox_setup_systemd|bool
+
 - include: setup_web_frontend.yml
   when: netbox_setup_web_frontend|bool

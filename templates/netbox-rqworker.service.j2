@@ -1,0 +1,21 @@
+[Unit]
+Description=NetBox Request Queue Worker
+Documentation=https://netbox.readthedocs.io/en/stable/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+
+User={{ netbox_user }}
+Group={{ netbox_group }}
+WorkingDirectory={{ netbox_install_directory }}
+
+ExecStart={{ netbox_virtualenv_path }}/bin/python3 {{ netbox_install_directory }}/netbox/manage.py rqworker
+
+Restart=on-failure
+RestartSec=30
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,15 +1,19 @@
 ---
+- name: reload systemd
+  systemd:
+    daemon_reload: true
+
 - name: restart netbox
-  supervisorctl:
+  service:
     name: netbox
     state: restarted
-  when: netbox_setup_web_backend|bool
+  when: netbox_setup_systemd|bool
 
 - name: restart netbox rqworker
-  supervisorctl:
+  service:
     name: netbox-rqworker
     state: restarted
-  when: netbox_setup_web_backend|bool
+  when: netbox_setup_systemd|bool
 
 - name: restart apache2
   service:

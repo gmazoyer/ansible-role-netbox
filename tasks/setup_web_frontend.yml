@@ -1,5 +1,5 @@
 ---
-- name: enable mod_proxy and mod_proxy_http
+- name: enable required apache2 modules
   apache2_module:
     state: present
     name: "{{ item }}"

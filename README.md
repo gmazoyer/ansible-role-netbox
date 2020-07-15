@@ -30,7 +30,7 @@ Setup for the PostgreSQL database:
 Where to get NetBox and which version:
 
     netbox_version: v2.8.7
-    netbox_git_url: https://github.com/digitalocean/netbox.git
+    netbox_git_url: https://github.com/netbox-community/netbox.git
 
 Where to install NetBox:
 
@@ -67,12 +67,12 @@ be generated automatically:
       TIME_ZONE: "Europe/Paris"
       …
 
-Configuration for the backend web servers:
+Configuration for the backend web server and systemd:
 
-    netbox_setup_web_backend: false
+    netbox_setup_systemd: false
     netbox_gunicorn_address: 127.0.0.1
     netbox_gunicorn_port: 8001
-    netbox_gunicorn_workers_number: 4
+    netbox_gunicorn_workers_number: 5
 
 Whether or not to configure the frontend web server:
 
@@ -94,4 +94,4 @@ demarcated in the header. See `LICENSE-MIT` for more information.
 
 ## Author Information
 
-This role was created in 2017 by [Guillaume Mazoyer](https://respawner.fr).
+This role was created in 2017 by [Guillaume Mazoyer](https://mazoyer.eu).

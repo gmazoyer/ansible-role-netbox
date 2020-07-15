@@ -32,11 +32,6 @@
     netbox_other_packages: "{{ __netbox_other_packages | list }}"
   when: netbox_other_packages is not defined
 
-- name: define web backend packages
-  set_fact:
-    netbox_web_backend_packages: "{{ __netbox_web_backend_packages | list }}"
-  when: netbox_web_backend_packages is not defined
-
 - name: define web frontend packages
   set_fact:
     netbox_web_frontend_packages: "{{ __netbox_web_frontend_packages | list }}"

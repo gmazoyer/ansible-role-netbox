@@ -30,11 +30,11 @@ netbox_setup_ldap_auth: false
 # http://netbox.readthedocs.io/en/latest/installation/ldap/
 netbox_ldap_config: ""
 
-# Web backend variables (not configured by default)
-netbox_setup_web_backend: false
+# Systemd unit variables (configured by default)
+netbox_setup_systemd: true
 netbox_gunicorn_address: 127.0.0.1
 netbox_gunicorn_port: 8001
-netbox_gunicorn_workers_number: 4
+netbox_gunicorn_workers_number: "{{ ansible_processor_vcpus + 1 }}"
 
 # Web frontend variables (not configured by default)
 netbox_setup_web_frontend: false

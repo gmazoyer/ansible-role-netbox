@@ -25,8 +25,6 @@ __netbox_ldap_packages:
   - libldap2-dev
   - libsasl2-dev
 
-__netbox_web_backend_packages:
-  - supervisor
 __netbox_web_frontend_packages:
   - apache2
   - apache2-utils
@@ -34,14 +32,11 @@ __netbox_web_frontend_packages:
 
 netbox_python_binary: /usr/bin/python3.7
 
-__netbox_postgresql_service: postgresql
-__netbox_postgresql_user: postgres
+netbox_postgresql_service: postgresql
+netbox_postgresql_user: postgres
 
 netbox_redis_service: redis-server
 netbox_redis_configuration: /etc/redis/redis.conf
-
-netbox_supervisord_service: supervisor
-netbox_supervisord_config_directory: /etc/supervisor/conf.d
 
 netbox_apache2_service: apache2
 netbox_apache2_user: www-data
