@@ -20,7 +20,8 @@
   </Location>
 
   ProxyPreserveHost On
-  ProxyPass        / http://{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}/
-  ProxyPassReverse / http://{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}/
+  RequestHeader     set "X-Forwarded-Proto" expr=%{REQUEST_SCHEME}
+  ProxyPass         / http://{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}/
+  ProxyPassReverse  / http://{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}/
 </VirtualHost>
 {% endfor %}
