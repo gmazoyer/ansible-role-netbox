@@ -4,6 +4,7 @@
     state: present
     name: "{{ item }}"
   with_items:
+    - headers
     - proxy
     - proxy_http
     - wsgi
