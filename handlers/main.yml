@@ -7,16 +7,19 @@
   service:
     name: netbox
     state: restarted
+    enabled: true
   when: netbox_setup_systemd|bool
 
 - name: restart netbox rqworker
   service:
     name: netbox-rqworker
     state: restarted
+    enabled: true
   when: netbox_setup_systemd|bool
 
 - name: restart apache2
   service:
     name: "{{ netbox_apache2_service }}"
     state: restarted
+    enabled: true
   when: netbox_setup_web_frontend|bool
