@@ -44,7 +44,7 @@ The username, password and email for the super user.
 
 LDAP can be used as authentication mechanism. It must be enabled, and the whole
 LDAP configuration has to be provided in the following variables (see NetBox
-[documentation](http://netbox.readthedocs.io/en/latest/installation/ldap/)):
+[documentation](https://netbox.readthedocs.io/en/stable/installation/6-ldap/)):
 
     netbox_setup_ldap_auth: false
     netbox_ldap_config: ""
