@@ -28,6 +28,10 @@ REDIS = {
     }
 }
 
+{% if netbox_setup_ldap_auth %}
+REMOTE_AUTH_BACKEND = 'netbox.authentication.LDAPBackend'
+{% endif %}
+
 {% for setting, value in netbox_config.items() %}
 {% if value in [True, False] %}
 {{ setting }} = {{ 'True' if value else 'False' }}
