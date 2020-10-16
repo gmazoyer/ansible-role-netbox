@@ -51,7 +51,7 @@
 
 - name: generate python local requirements
   template:
-    src: local_requirement.txt.j2
+    src: local_requirements.txt.j2
     dest: "{{ netbox_install_directory }}/local_requirements.txt"
     owner: "{{ netbox_user }}"
     group: "{{ netbox_group }}"
