@@ -3,7 +3,6 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint: yamllint -c molecule/default/yamllint.yml molecule/default/
 platforms:
   - name: instance
     image: gmazoyer/ansible-docker-${MOLECULE_DISTRO:-debian10}
