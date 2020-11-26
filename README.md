@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/respawner/ansible-role-netbox.svg?branch=master)](https://travis-ci.org/respawner/ansible-role-netbox)
+[![CI](https://github.com/respawner/ansible-role-netbox/workflows/CI/badge.svg?event=push)](https://github.com/respawner/ansible-role-netbox/actions?query=workflow%3ACI)
 [![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-netbox-blue.svg)](https://galaxy.ansible.com/respawner/netbox)
 
 # Ansible Role: NetBox
