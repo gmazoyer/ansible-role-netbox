@@ -18,4 +18,4 @@
       when: ansible_os_family == 'Debian'
 
   roles:
-    - role: respawner.netbox
+    - role: gmazoyer.netbox
