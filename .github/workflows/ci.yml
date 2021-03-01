@@ -10,7 +10,7 @@ on:
 
 defaults:
   run:
-    working-directory: 'respawner.netbox'
+    working-directory: 'gmazoyer.netbox'
 
 jobs:
   lint:
@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          path: 'respawner.netbox'
+          path: 'gmazoyer.netbox'
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          path: 'respawner.netbox'
+          path: 'gmazoyer.netbox'
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
