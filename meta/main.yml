@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: netbox
-  author: Guillaume Mazoyer
+  author: gmazoyer
   description: A role to install and update NetBox.
   license: GPL-3+, MIT
   min_ansible_version: 2.5.0
