@@ -151,7 +151,7 @@
   - name: check for missing cable paths
     django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
-      command: trace_paths --noinput
+      command: trace_paths --no-input
       virtualenv: "{{ netbox_virtualenv_path }}"
     become: true
     become_user: "{{ netbox_user }}"
