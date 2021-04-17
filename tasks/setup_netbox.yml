@@ -26,7 +26,9 @@
 
 - name: upgrade pip in virtualenv
   pip:
-    name: pip
+    name:
+      - pip
+      - wheel
     extra_args: "--upgrade"
     virtualenv: "{{ netbox_virtualenv_path }}"
     virtualenv_command: "{{ netbox_python_binary }} -m venv"
@@ -146,6 +148,16 @@
     notify:
       - restart netbox
       - restart netbox rqworker
+  - name: check for missing cable paths
+    django_manage:
+      app_path: "{{ netbox_install_directory }}/netbox"
+      command: trace_paths --noinput
+      virtualenv: "{{ netbox_virtualenv_path }}"
+    become: true
+    become_user: "{{ netbox_user }}"
+    notify:
+      - restart netbox
+      - restart netbox rqworker
   - name: collect static files
     django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
@@ -154,6 +166,16 @@
       virtualenv: "{{ netbox_virtualenv_path }}"
     become: true
     become_user: "{{ netbox_user }}"
+  - name: clear cache data
+    django_manage:
+      app_path: "{{ netbox_install_directory }}/netbox"
+      command: invalidate all
+      virtualenv: "{{ netbox_virtualenv_path }}"
+    become: true
+    become_user: "{{ netbox_user }}"
+    notify:
+      - restart netbox
+      - restart netbox rqworker
   when: netbox_downloaded.changed
 
 - name: create super user
