@@ -1,6 +1,6 @@
 ---
 # Git URL and version to use, version must be a Git tag
-netbox_version: v2.11.8
+netbox_version: v2.11.9
 netbox_git_url: https://github.com/netbox-community/netbox.git
 
 # Where to install Netbox
