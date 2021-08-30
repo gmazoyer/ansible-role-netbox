@@ -148,6 +148,16 @@
     notify:
       - restart netbox
       - restart netbox rqworker
+  - name: remove expired user sessions
+    django_manage:
+      app_path: "{{ netbox_install_directory }}/netbox"
+      command: clearsessions
+      virtualenv: "{{ netbox_virtualenv_path }}"
+    become: true
+    become_user: "{{ netbox_user }}"
+    notify:
+      - restart netbox
+      - restart netbox rqworker
   - name: check for missing cable paths
     django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
