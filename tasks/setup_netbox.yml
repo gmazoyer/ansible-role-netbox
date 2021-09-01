@@ -176,16 +176,6 @@
       virtualenv: "{{ netbox_virtualenv_path }}"
     become: true
     become_user: "{{ netbox_user }}"
-  - name: clear cache data
-    django_manage:
-      app_path: "{{ netbox_install_directory }}/netbox"
-      command: invalidate all
-      virtualenv: "{{ netbox_virtualenv_path }}"
-    become: true
-    become_user: "{{ netbox_user }}"
-    notify:
-      - restart netbox
-      - restart netbox rqworker
   when: netbox_downloaded.changed
 
 - name: create super user
