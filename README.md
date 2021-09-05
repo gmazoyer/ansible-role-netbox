@@ -67,6 +67,13 @@ be generated automatically:
       TIME_ZONE: "Europe/Paris"
       …
 
+Housekeeping to clear expired sessions and remove old changelog entries can be
+configured with the following variables:
+
+    netbox_housekeeping: true
+    netbox_housekeeping_hour: 4
+    netbox_housekeeping_minute: 30
+
 Configuration for the backend web server and systemd:
 
     netbox_setup_systemd: false
