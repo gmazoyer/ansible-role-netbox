@@ -38,6 +38,7 @@ jobs:
       matrix:
         distro:
           - debian10
+          - debian11
           - ubuntu2004
     steps:
       - uses: actions/checkout@v2
