@@ -52,3 +52,8 @@ netbox_config:
     - 127.0.0.1
   MEDIA_ROOT: "{{ netbox_install_directory }}/netbox/media"
   REPORTS_ROOT: "{{ netbox_install_directory }}/netbox/reports"
+
+# Housekeeping
+netbox_housekeeping: true
+netbox_housekeeping_hour: 4
+netbox_housekeeping_minute: 30
