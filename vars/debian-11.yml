@@ -8,7 +8,7 @@ __netbox_python_packages:
 __netbox_postgresql_packages:
   - postgresql
   - libpq-dev
-  - python-psycopg2
+  - python3-psycopg2
 __netbox_redis_packages:
   - redis-server
 
