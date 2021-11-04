@@ -129,7 +129,7 @@
 
 - block:
   - name: perform database migration
-    django_manage:
+    community.general.django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
       command: migrate
       virtualenv: "{{ netbox_virtualenv_path }}"
@@ -139,7 +139,7 @@
       - restart netbox
       - restart netbox rqworker
   - name: remove stale content types
-    django_manage:
+    community.general.django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
       command: remove_stale_contenttypes --no-input
       virtualenv: "{{ netbox_virtualenv_path }}"
@@ -149,7 +149,7 @@
       - restart netbox
       - restart netbox rqworker
   - name: remove expired user sessions
-    django_manage:
+    community.general.django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
       command: clearsessions
       virtualenv: "{{ netbox_virtualenv_path }}"
@@ -159,7 +159,7 @@
       - restart netbox
       - restart netbox rqworker
   - name: check for missing cable paths
-    django_manage:
+    community.general.django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
       command: trace_paths --no-input
       virtualenv: "{{ netbox_virtualenv_path }}"
@@ -169,11 +169,15 @@
       - restart netbox
       - restart netbox rqworker
   - name: collect static files
-    django_manage:
+    community.general.django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
       command: collectstatic
       clear: true
       virtualenv: "{{ netbox_virtualenv_path }}"
+    become: true
+    become_user: "{{ netbox_user }}"
+  - name: build documentation
+    ansible.builtin.command: "{{ netbox_virtualenv_path }}/bin/mkdocs build"
     become: true
     become_user: "{{ netbox_user }}"
   when: netbox_downloaded.changed
