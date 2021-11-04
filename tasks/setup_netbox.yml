@@ -178,6 +178,8 @@
     become_user: "{{ netbox_user }}"
   - name: build documentation
     ansible.builtin.command: "{{ netbox_virtualenv_path }}/bin/mkdocs build"
+    args:
+      chdir: "{{ netbox_install_directory }}"
     become: true
     become_user: "{{ netbox_user }}"
   when: netbox_downloaded.changed
