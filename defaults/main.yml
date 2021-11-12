@@ -52,6 +52,7 @@ netbox_config:
     - 127.0.0.1
   MEDIA_ROOT: "{{ netbox_install_directory }}/netbox/media"
   REPORTS_ROOT: "{{ netbox_install_directory }}/netbox/reports"
+  RQ_DEFAULT_TIMEOUT: 300
 
 # Housekeeping
 netbox_housekeeping: true
