@@ -168,18 +168,18 @@
     notify:
       - restart netbox
       - restart netbox rqworker
+  - name: build documentation
+    ansible.builtin.command: "{{ netbox_virtualenv_path }}/bin/mkdocs build"
+    args:
+      chdir: "{{ netbox_install_directory }}"
+    become: true
+    become_user: "{{ netbox_user }}"
   - name: collect static files
     community.general.django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
       command: collectstatic
       clear: true
       virtualenv: "{{ netbox_virtualenv_path }}"
-    become: true
-    become_user: "{{ netbox_user }}"
-  - name: build documentation
-    ansible.builtin.command: "{{ netbox_virtualenv_path }}/bin/mkdocs build"
-    args:
-      chdir: "{{ netbox_install_directory }}"
     become: true
     become_user: "{{ netbox_user }}"
   when: netbox_downloaded.changed
