@@ -93,6 +93,7 @@
   - name: set secret key in configuration
     set_fact:
       netbox_config: "{{ netbox_config | combine({'SECRET_KEY': __netbox_secret_key_file['content'] | b64decode}) }}"
+  when: netbox_config.SECRET_KEY is not defined
 
 - name: configure netbox
   template:
