@@ -2,12 +2,12 @@
 # Copyright (c) 2017-2020 Guillaume Mazoyer under the GPL
 # Copyright (c) 2017-2018 Musee "lae" Ullah under the MIT License
 - name: check if there is an existing installation
-  stat:
+  ansible.builtin.stat:
     path: "{{ netbox_install_directory }}"
   register: netbox_installed
 
 - name: create the install directory
-  file:
+  ansible.builtin.file:
     path: "{{ netbox_install_directory }}"
     owner: "{{ netbox_user }}"
     group: "{{ netbox_group }}"
@@ -16,7 +16,7 @@
   when: not netbox_installed.stat.exists
 
 - name: download using git
-  git:
+  ansible.builtin.git:
     repo: "{{ netbox_git_url }}"
     version: "{{ netbox_version }}"
     dest: "{{ netbox_install_directory }}"
@@ -25,7 +25,7 @@
   register: netbox_downloaded
 
 - name: upgrade pip in virtualenv
-  pip:
+  ansible.builtin.pip:
     name:
       - pip
       - wheel
@@ -38,7 +38,7 @@
   until: pip_result is success
 
 - name: install python requirements
-  pip:
+  ansible.builtin.pip:
     requirements: "{{ netbox_install_directory }}/requirements.txt"
     extra_args: "--upgrade"
     virtualenv: "{{ netbox_virtualenv_path }}"
@@ -53,7 +53,7 @@
   when: netbox_downloaded.changed
 
 - name: generate python local requirements
-  template:
+  ansible.builtin.template:
     src: local_requirements.txt.j2
     dest: "{{ netbox_install_directory }}/local_requirements.txt"
     owner: "{{ netbox_user }}"
@@ -63,7 +63,7 @@
   when: netbox_local_requirements|bool
 
 - name: install local requirements
-  pip:
+  ansible.builtin.pip:
     requirements: "{{ netbox_install_directory }}/local_requirements.txt"
     extra_args: "--upgrade"
     virtualenv: "{{ netbox_virtualenv_path }}"
@@ -79,24 +79,24 @@
 
 - block:
   - name: generate a secret key
-    shell: "{{ netbox_python_binary }} {{ netbox_install_directory }}/netbox/generate_secret_key.py | tr -d $'\n' > {{ netbox_user_home_directory }}/secret.key"
+    ansible.builtin.shell: "{{ netbox_python_binary }} {{ netbox_install_directory }}/netbox/generate_secret_key.py | tr -d $'\n' > {{ netbox_user_home_directory }}/secret.key"
     args:
       creates: "{{ netbox_user_home_directory }}/secret.key"
     become: true
     become_user: "{{ netbox_user }}"
 
   - name: load secret key
-    slurp:
+    ansible.builtin.slurp:
       src: "{{ netbox_user_home_directory }}/secret.key"
     register: __netbox_secret_key_file
 
   - name: set secret key in configuration
-    set_fact:
+    ansible.builtin.set_fact:
       netbox_config: "{{ netbox_config | combine({'SECRET_KEY': __netbox_secret_key_file['content'] | b64decode}) }}"
   when: netbox_config.SECRET_KEY is not defined
 
 - name: configure netbox
-  template:
+  ansible.builtin.template:
     src: configuration.py.j2
     dest: "{{ netbox_install_directory }}/netbox/netbox/configuration.py"
     owner: "{{ netbox_user }}"
@@ -108,7 +108,7 @@
 
 - block:
   - name: install django-auth-ldap
-    pip:
+    ansible.builtin.pip:
       name: django-auth-ldap
       extra_args: "--upgrade"
       virtualenv: "{{ netbox_virtualenv_path }}"
@@ -118,7 +118,7 @@
     register: pip_result
     until: pip_result is success
   - name: configure ldap auth
-    copy:
+    ansible.builtin.copy:
       content: "{{ netbox_ldap_config }}"
       dest: "{{ netbox_install_directory }}/netbox/netbox/ldap_config.py"
       owner: "{{ netbox_user }}"
@@ -196,7 +196,7 @@
   when: netbox_housekeeping|bool
 
 - name: create super user
-  shell: "printf '{{ netbox_superuser_script }}' | {{ netbox_virtualenv_path }}/bin/python {{ netbox_install_directory }}/netbox/manage.py shell"
+  ansible.builtin.shell: "printf '{{ netbox_superuser_script }}' | {{ netbox_virtualenv_path }}/bin/python {{ netbox_install_directory }}/netbox/manage.py shell"
   become: true
   become_user: "{{ netbox_user }}"
   register: __netbox_superuser_result

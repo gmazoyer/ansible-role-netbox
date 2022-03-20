@@ -1,27 +1,27 @@
 ---
-- import_tasks: include_vars.yml
-- import_tasks: install_packages.yml
+- ansible.builtin.import_tasks: include_vars.yml
+- ansible.builtin.import_tasks: install_packages.yml
 
 - name: ensure python 3 is used
-  set_fact:
+  ansible.builtin.set_fact:
     ansible_python_interpreter: "{{ netbox_python_binary }}"
 
 - block:
   - name: create netbox group
-    group:
+    ansible.builtin.group:
       name: "{{ netbox_group }}"
 
   - name: create netbox user
-    user:
+    ansible.builtin.user:
       name: "{{ netbox_user }}"
       group: "{{ netbox_group }}"
       home: "{{ netbox_user_home_directory }}"
 
-- import_tasks: setup_database.yml
+- ansible.builtin.import_tasks: setup_database.yml
   when: netbox_database_host == 'localhost'
-- import_tasks: setup_netbox.yml
+- ansible.builtin.import_tasks: setup_netbox.yml
 
-- include: setup_systemd.yml
+- ansible.builtin.import_tasks: setup_systemd.yml
   when: netbox_setup_systemd|bool
 
 - include: setup_web_frontend.yml

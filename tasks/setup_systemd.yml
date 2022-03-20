@@ -1,6 +1,6 @@
 ---
 - name: install gunicorn
-  pip:
+  ansible.builtin.pip:
     name: gunicorn
     extra_args: "--upgrade"
     virtualenv: "{{ netbox_virtualenv_path }}"
@@ -11,7 +11,7 @@
   until: pip_result is success
 
 - name: configure gunicorn
-  template:
+  ansible.builtin.template:
     src: gunicorn.py.j2
     dest: "{{ netbox_install_directory }}/gunicorn.py"
     owner: "{{ netbox_user }}"
@@ -21,7 +21,7 @@
     - restart netbox
 
 - name: configure netbox systemd service
-  template:
+  ansible.builtin.template:
     src: netbox.service.j2
     dest: "{{ netbox_systemd_directory }}/netbox.service"
     owner: root
@@ -33,7 +33,7 @@
     - restart netbox rqworker
 
 - name: configure netbox rqworker systemd service
-  template:
+  ansible.builtin.template:
     src: netbox-rqworker.service.j2
     dest: "{{ netbox_systemd_directory }}/netbox-rqworker.service"
     owner: root

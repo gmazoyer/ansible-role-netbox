@@ -1,38 +1,38 @@
 ---
 # Include variables and define needed ones
 - name: include os-specific variables
-  include_vars: "{{ item }}"
+  ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version }}.yml"
     - "{{ ansible_distribution | lower }}.yml"
     - "{{ ansible_os_family | lower }}.yml"
 
 - name: define python packages
-  set_fact:
+  ansible.builtin.set_fact:
     netbox_python_packages: "{{ __netbox_python_packages | list }}"
   when: netbox_python_packages is not defined
 
 - name: define postgresql packages
-  set_fact:
+  ansible.builtin.set_fact:
     netbox_postgresql_packages: "{{ __netbox_postgresql_packages | list }}"
   when: netbox_postgresql_packages is not defined
 
 - name: define redis packages
-  set_fact:
+  ansible.builtin.set_fact:
     netbox_redis_packages: "{{ __netbox_redis_packages | list }}"
   when: netbox_redis_packages is not defined
 
 - name: define ldap packages
-  set_fact:
+  ansible.builtin.set_fact:
     netbox_ldap_packages: "{{ __netbox_ldap_packages | list }}"
   when: netbox_ldap_packages is not defined
 
 - name: define other packages
-  set_fact:
+  ansible.builtin.set_fact:
     netbox_other_packages: "{{ __netbox_other_packages | list }}"
   when: netbox_other_packages is not defined
 
 - name: define web frontend packages
-  set_fact:
+  ansible.builtin.set_fact:
     netbox_web_frontend_packages: "{{ __netbox_web_frontend_packages | list }}"
   when: netbox_web_frontend_packages is not defined

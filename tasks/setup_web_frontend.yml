@@ -1,6 +1,6 @@
 ---
 - name: enable required apache2 modules
-  apache2_module:
+  community.general.apache2_module:
     state: present
     name: "{{ item }}"
   with_items:
@@ -12,14 +12,14 @@
     - restart apache2
 
 - name: remove default vhost
-  file:
+  ansible.builtin.file:
     path: "{{ netbox_apache2_sites_enabled_path }}/{{ netbox_apache2_default_vhost }}"
     state: absent
   notify:
     - restart apache2
 
 - name: configure netbox vhost
-  template:
+  ansible.builtin.template:
     src: netbox_vhost.conf.j2
     dest: "{{ netbox_apache2_sites_available_path }}/netbox.conf"
     owner: "{{ netbox_apache2_user }}"
@@ -27,7 +27,7 @@
     mode: 0644
 
 - name: enable netbox vhost
-  file:
+  ansible.builtin.file:
     src: "{{ netbox_apache2_sites_available_path }}/netbox.conf"
     dest: "{{ netbox_apache2_sites_enabled_path }}/netbox.conf"
     state: link
