@@ -6,7 +6,8 @@
   ansible.builtin.set_fact:
     ansible_python_interpreter: "{{ netbox_python_binary }}"
 
-- block:
+- name: create netbox user and group
+  block:
   - name: create netbox group
     ansible.builtin.group:
       name: "{{ netbox_group }}"

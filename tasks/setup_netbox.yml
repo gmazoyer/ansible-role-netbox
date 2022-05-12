@@ -77,7 +77,8 @@
     - restart netbox rqworker
   when: local_requirements_file.changed
 
-- block:
+- name: setup secret key
+  block:
   - name: generate a secret key
     ansible.builtin.shell: "{{ netbox_python_binary }} {{ netbox_install_directory }}/netbox/generate_secret_key.py | tr -d $'\n' > {{ netbox_user_home_directory }}/secret.key"
     args:
@@ -106,7 +107,8 @@
     - restart netbox
     - restart netbox rqworker
 
-- block:
+- name: setup ldap authentication
+  block:
   - name: install django-auth-ldap
     ansible.builtin.pip:
       name: django-auth-ldap
@@ -128,7 +130,8 @@
       - restart netbox
   when: netbox_setup_ldap_auth|bool
 
-- block:
+- name: perform netbox maintenance tasks
+  block:
   - name: perform database migration
     community.general.django_manage:
       app_path: "{{ netbox_install_directory }}/netbox"
