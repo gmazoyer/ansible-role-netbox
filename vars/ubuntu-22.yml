@@ -1,0 +1,45 @@
+---
+__netbox_python_packages:
+  - python3.10
+  - python3.10-dev
+  - python3-venv
+  - python3-pip
+__netbox_postgresql_packages:
+  - postgresql
+  - libpq-dev
+  - python3-psycopg2
+__netbox_redis_packages:
+  - redis-server
+
+__netbox_other_packages:
+  - git
+  - libxml2-dev
+  - libxslt1-dev
+  - libffi-dev
+  - libjpeg-dev
+  - graphviz
+  - libssl-dev
+
+__netbox_ldap_packages:
+  - libldap2-dev
+  - libsasl2-dev
+
+__netbox_web_frontend_packages:
+  - apache2
+  - apache2-utils
+  - libapache2-mod-wsgi-py3
+
+netbox_python_binary: /usr/bin/python3.10
+
+netbox_postgresql_service: postgresql
+netbox_postgresql_user: postgres
+
+netbox_redis_service: redis-server
+netbox_redis_configuration: /etc/redis/redis.conf
+
+netbox_apache2_service: apache2
+netbox_apache2_user: www-data
+netbox_apache2_group: www-data
+netbox_apache2_sites_available_path: /etc/apache2/sites-available
+netbox_apache2_sites_enabled_path: /etc/apache2/sites-enabled
+netbox_apache2_default_vhost: 000-default.conf

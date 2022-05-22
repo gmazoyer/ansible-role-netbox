@@ -39,6 +39,7 @@ jobs:
         distro:
           - debian11
           - ubuntu2004
+          - ubuntu2204
     steps:
       - uses: actions/checkout@v2
         with:
