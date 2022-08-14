@@ -3,6 +3,11 @@
   hosts: all
 
   vars:
+    netbox_config:
+      ALLOWED_HOSTS:
+        - localhost
+        - 127.0.0.1
+      TIME_ZONE: Europe/Paris
     netbox_setup_ldap_auth: true
     netbox_setup_web_frontend: true
     netbox_ldap_config: "AUTH_LDAP_SERVER_URI = '127.0.0.1'"
