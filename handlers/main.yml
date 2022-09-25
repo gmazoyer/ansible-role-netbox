@@ -8,18 +8,18 @@
     name: netbox
     state: restarted
     enabled: true
-  when: netbox_setup_systemd|bool
+  when: netbox_setup_systemd | bool
 
 - name: Restart NetBox rqworker
   ansible.builtin.service:
     name: netbox-rqworker
     state: restarted
     enabled: true
-  when: netbox_setup_systemd|bool
+  when: netbox_setup_systemd | bool
 
 - name: Restart Apache2
   ansible.builtin.service:
     name: "{{ netbox_apache2_service }}"
     state: restarted
     enabled: true
-  when: netbox_setup_web_frontend|bool
+  when: netbox_setup_web_frontend | bool
