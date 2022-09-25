@@ -1,5 +1,5 @@
 ---
-- name: enable required apache2 modules
+- name: Enable required Apache2 modules
   community.general.apache2_module:
     state: present
     name: "{{ item }}"
@@ -9,16 +9,16 @@
     - proxy_http
     - wsgi
   notify:
-    - restart apache2
+    - Restart Apache2
 
-- name: remove default vhost
+- name: Remove default vhost
   ansible.builtin.file:
     path: "{{ netbox_apache2_sites_enabled_path }}/{{ netbox_apache2_default_vhost }}"
     state: absent
   notify:
-    - restart apache2
+    - Restart Apache2
 
-- name: configure netbox vhost
+- name: Configure NetBox vhost
   ansible.builtin.template:
     src: netbox_vhost.conf.j2
     dest: "{{ netbox_apache2_sites_available_path }}/netbox.conf"
@@ -26,10 +26,10 @@
     group: "{{ netbox_apache2_group }}"
     mode: 0644
 
-- name: enable netbox vhost
+- name: Enable NetBox vhost
   ansible.builtin.file:
     src: "{{ netbox_apache2_sites_available_path }}/netbox.conf"
     dest: "{{ netbox_apache2_sites_enabled_path }}/netbox.conf"
     state: link
   notify:
-    - restart apache2
+    - Restart Apache2
