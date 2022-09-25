@@ -1,6 +1,6 @@
 skip_list:
-  - 'yaml'
-  - 'role-name'
-  - 'no-handler'
-  - 'risky-shell-pipe'
-  - 'no-changed-when'
+  - role-name
+  - no-handler
+  - risky-shell-pipe
+  - no-changed-when
+  - template-instead-of-copy

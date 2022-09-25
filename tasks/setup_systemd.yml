@@ -1,5 +1,5 @@
 ---
-- name: install gunicorn
+- name: Install gunicorn
   ansible.builtin.pip:
     name: gunicorn
     extra_args: "--upgrade"
@@ -10,7 +10,7 @@
   register: pip_result
   until: pip_result is success
 
-- name: configure gunicorn
+- name: Configure gunicorn
   ansible.builtin.template:
     src: gunicorn.py.j2
     dest: "{{ netbox_install_directory }}/gunicorn.py"
@@ -18,9 +18,9 @@
     group: "{{ netbox_group }}"
     mode: 0644
   notify:
-    - restart netbox
+    - Restart NetBox
 
-- name: configure netbox systemd service
+- name: Configure NetBox systemd service
   ansible.builtin.template:
     src: netbox.service.j2
     dest: "{{ netbox_systemd_directory }}/netbox.service"
@@ -28,11 +28,11 @@
     group: root
     mode: 0644
   notify:
-    - reload systemd
-    - restart netbox
-    - restart netbox rqworker
+    - Reload systemd
+    - Restart NetBox
+    - Restart NetBox rqworker
 
-- name: configure netbox rqworker systemd service
+- name: Configure NetBox rqworker systemd service
   ansible.builtin.template:
     src: netbox-rqworker.service.j2
     dest: "{{ netbox_systemd_directory }}/netbox-rqworker.service"
@@ -40,6 +40,6 @@
     group: root
     mode: 0644
   notify:
-    - reload systemd
-    - restart netbox
-    - restart netbox rqworker
+    - Reload systemd
+    - Restart NetBox
+    - Restart NetBox rqworker
