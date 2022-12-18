@@ -5,7 +5,6 @@ galaxy_info:
   description: A role to install and update NetBox.
   license: GPL-3+, MIT
   min_ansible_version: 2.5.0
-  github_branch: main
   platforms:
     - name: Debian
       versions:
