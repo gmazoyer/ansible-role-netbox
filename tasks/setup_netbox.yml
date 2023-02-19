@@ -12,7 +12,7 @@
     owner: "{{ netbox_user }}"
     group: "{{ netbox_group }}"
     state: directory
-    mode: 0755
+    mode: "755"
   when: not netbox_installed.stat.exists
 
 - name: Download using git
@@ -58,7 +58,7 @@
     dest: "{{ netbox_install_directory }}/local_requirements.txt"
     owner: "{{ netbox_user }}"
     group: "{{ netbox_group }}"
-    mode: 0644
+    mode: "644"
   register: local_requirements_file
   when: netbox_local_requirements | bool
 
@@ -102,7 +102,7 @@
     dest: "{{ netbox_install_directory }}/netbox/netbox/configuration.py"
     owner: "{{ netbox_user }}"
     group: "{{ netbox_group }}"
-    mode: 0644
+    mode: "644"
   notify:
     - Restart NetBox
     - Restart NetBox rqworker
@@ -126,7 +126,7 @@
         dest: "{{ netbox_install_directory }}/netbox/netbox/ldap_config.py"
         owner: "{{ netbox_user }}"
         group: "{{ netbox_group }}"
-        mode: 0644
+        mode: "644"
       notify:
         - Restart NetBox
 

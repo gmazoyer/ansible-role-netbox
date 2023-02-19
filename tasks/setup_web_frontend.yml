@@ -24,7 +24,7 @@
     dest: "{{ netbox_apache2_sites_available_path }}/netbox.conf"
     owner: "{{ netbox_apache2_user }}"
     group: "{{ netbox_apache2_group }}"
-    mode: 0644
+    mode: "644"
 
 - name: Enable NetBox vhost
   ansible.builtin.file:
