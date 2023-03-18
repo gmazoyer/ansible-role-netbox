@@ -2,7 +2,7 @@
 - name: Determine latest GitHub release (local)
   delegate_to: localhost
   become: false
-  uri:
+  ansible.builtin.uri:
     url: "https://api.github.com/repos/netbox-community/netbox/releases/latest"
     body_format: json
   register: _github_release
@@ -11,5 +11,5 @@
   retries: 5
 
 - name: Set netbox_version
-  set_fact:
+  ansible.builtin.set_fact:
     netbox_version: "{{ _github_release.json.tag_name }}"

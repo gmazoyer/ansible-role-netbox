@@ -2,7 +2,7 @@
 - name: Include variables
   ansible.builtin.import_tasks: include_vars.yml
 - name: Configure latest version
-  include_tasks: version.yml
+  ansible.builtin.include_tasks: version.yml
   when: >
     netbox_version is match("latest")
     or netbox_version is not defined
