@@ -21,7 +21,7 @@ jobs:
         with:
           path: 'gmazoyer.netbox'
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       - name: Install dependencies
@@ -45,7 +45,7 @@ jobs:
         with:
           path: 'gmazoyer.netbox'
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       - name: Install dependencies
@@ -67,7 +67,7 @@ jobs:
         with:
           path: 'gmazoyer.netbox'
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       - name: Install dependencies
