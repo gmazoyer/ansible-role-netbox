@@ -24,6 +24,7 @@
         name: "{{ netbox_user }}"
         group: "{{ netbox_group }}"
         home: "{{ netbox_user_home_directory }}"
+        shell: "/bin/false"
 
 - name: Setup database
   ansible.builtin.import_tasks: setup_database.yml
