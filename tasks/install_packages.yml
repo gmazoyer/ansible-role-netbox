@@ -2,9 +2,10 @@
 # Copyright (c) 2018-2020 Guillaume Mazoyer under the GPL License
 # Copyright (c) 2017-2018 Musee "lae" Ullah under the MIT License
 - name: Install required packages
-  ansible.builtin.package:
+  ansible.builtin.apt:
     name: "{{ __netbox_required_packages | flatten }}"
     state: present
+    update_cache: true
   vars:
     __netbox_required_packages:
       - "{{ netbox_python_packages }}"
