@@ -51,7 +51,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip wheel
-          pip3 install ansible molecule[docker] docker
+          pip3 install ansible molecule molecule-plugins[docker] docker
       - name: Run Molecule
         run: molecule test
         env:
