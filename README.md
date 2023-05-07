@@ -29,8 +29,11 @@ Setup for the PostgreSQL database:
 
 Where to get NetBox and which version:
 
-    netbox_version: v3.4.6
+    netbox_version: latest
     netbox_git_url: https://github.com/netbox-community/netbox.git
+
+By default, it will always get the latest stable version. A specific version
+can be enforced by using, `v3.5.1` for example.
 
 Where to install NetBox:
 
