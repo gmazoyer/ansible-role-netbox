@@ -1,5 +1,5 @@
 ---
-# Copyright (c) 2017-2020 Guillaume Mazoyer under the GPL
+# Copyright (c) 2017-2023 Guillaume Mazoyer under the GPL
 # Copyright (c) 2017-2018 Musee "lae" Ullah under the MIT License
 - name: Check if there is an existing installation
   ansible.builtin.stat:
@@ -83,6 +83,7 @@
       ansible.builtin.shell: "{{ netbox_python_binary }} {{ netbox_install_directory }}/netbox/generate_secret_key.py | tr -d $'\n' > {{ netbox_user_home_directory }}/secret.key"
       args:
         creates: "{{ netbox_user_home_directory }}/secret.key"
+        executable: /bin/bash
       become: true
       become_user: "{{ netbox_user }}"
 
@@ -94,7 +95,7 @@
     - name: Set secret key in configuration
       ansible.builtin.set_fact:
         netbox_config: "{{ netbox_config | combine({'SECRET_KEY': __netbox_secret_key_file['content'] | b64decode}) }}"
-      when: netbox_config.SECRET_KEY is not defined
+  when: netbox_config.SECRET_KEY is not defined
 
 - name: Configure netbox
   ansible.builtin.template:
