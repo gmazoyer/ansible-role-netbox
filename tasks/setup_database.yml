@@ -15,13 +15,13 @@
     name: "{{ netbox_database_user }}"
     password: "{{ netbox_database_password }}"
     encrypted: true
-    database: "{{ netbox_database }}"
+    db: "{{ netbox_database }}"
   become: true
   become_user: "{{ netbox_postgresql_user }}"
 
 - name: Grant ALL privileges to PostgreSQL user
   community.postgresql.postgresql_privs:
-    database: "{{ netbox_database }}"
+    db: "{{ netbox_database }}"
     privs: ALL
     role: "{{ netbox_database_user }}"
     type: database
