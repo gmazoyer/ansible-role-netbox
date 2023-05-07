@@ -78,6 +78,7 @@
   when: local_requirements_file.changed
 
 - name: Setup secret key
+  when: netbox_config.SECRET_KEY is not defined
   block:
     - name: Generate a secret key
       ansible.builtin.shell: "{{ netbox_python_binary }} {{ netbox_install_directory }}/netbox/generate_secret_key.py | tr -d $'\n' > {{ netbox_user_home_directory }}/secret.key"
@@ -95,7 +96,6 @@
     - name: Set secret key in configuration
       ansible.builtin.set_fact:
         netbox_config: "{{ netbox_config | combine({'SECRET_KEY': __netbox_secret_key_file['content'] | b64decode}) }}"
-  when: netbox_config.SECRET_KEY is not defined
 
 - name: Configure netbox
   ansible.builtin.template:
@@ -144,6 +144,20 @@
       notify:
         - Restart NetBox
         - Restart NetBox rqworker
+    - name: Build documentation
+      ansible.builtin.command: "{{ netbox_virtualenv_path }}/bin/mkdocs build"
+      args:
+        chdir: "{{ netbox_install_directory }}"
+      become: true
+      become_user: "{{ netbox_user }}"
+    - name: Collect static files
+      community.general.django_manage:
+        app_path: "{{ netbox_install_directory }}/netbox"
+        command: collectstatic
+        clear: true
+        virtualenv: "{{ netbox_virtualenv_path }}"
+      become: true
+      become_user: "{{ netbox_user }}"
     - name: Remove stale content types
       community.general.django_manage:
         app_path: "{{ netbox_install_directory }}/netbox"
@@ -161,9 +175,6 @@
         virtualenv: "{{ netbox_virtualenv_path }}"
       become: true
       become_user: "{{ netbox_user }}"
-      notify:
-        - Restart NetBox
-        - Restart NetBox rqworker
     - name: Check for missing cable paths
       community.general.django_manage:
         app_path: "{{ netbox_install_directory }}/netbox"
@@ -171,20 +182,17 @@
         virtualenv: "{{ netbox_virtualenv_path }}"
       become: true
       become_user: "{{ netbox_user }}"
-      notify:
-        - Restart NetBox
-        - Restart NetBox rqworker
-    - name: Build documentation
-      ansible.builtin.command: "{{ netbox_virtualenv_path }}/bin/mkdocs build"
-      args:
-        chdir: "{{ netbox_install_directory }}"
-      become: true
-      become_user: "{{ netbox_user }}"
-    - name: Collect static files
+    - name: Rebuild the search cache (lazily)
       community.general.django_manage:
         app_path: "{{ netbox_install_directory }}/netbox"
-        command: collectstatic
-        clear: true
+        command: reindex --lazy
+        virtualenv: "{{ netbox_virtualenv_path }}"
+      become: true
+      become_user: "{{ netbox_user }}"
+    - name: Clear the cache
+      community.general.django_manage:
+        app_path: "{{ netbox_install_directory }}/netbox"
+        command: clearcache
         virtualenv: "{{ netbox_virtualenv_path }}"
       become: true
       become_user: "{{ netbox_user }}"
