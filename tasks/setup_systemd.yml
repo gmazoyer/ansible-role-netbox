@@ -52,7 +52,7 @@
         msg: Variable command is not defined
       when: item.value.enabled | bool and item.value.command is undefined
       with_dict: "{{ netbox_systemd_timers }}"
-    
+
     - name: Setup timer service file
       ansible.builtin.template:
         src: systemd_timer_service.j2
