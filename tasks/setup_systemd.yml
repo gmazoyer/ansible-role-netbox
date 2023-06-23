@@ -78,13 +78,14 @@
     - name: Enable timer
       ansible.builtin.systemd:
         name: "{{ item.key }}.timer"
-        state: restarted
+        state: started
         enabled: true
         masked: false
-        daemon_reload: true
         scope: system
       when: item.value.enabled | bool
       with_dict: "{{ netbox_systemd_timers }}"
+      notify:
+        - Reload systemd
 
     - name: Disable timer
       ansible.builtin.systemd:
@@ -92,7 +93,8 @@
         state: stopped
         enabled: false
         masked: false
-        daemon_reload: true
         scope: system
       when: not item.value.enabled | bool
       with_dict: "{{ netbox_systemd_timers }}"
+      notify:
+        - Reload systemd
