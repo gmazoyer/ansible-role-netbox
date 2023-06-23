@@ -44,9 +44,11 @@
     - Restart NetBox
     - Restart NetBox rqworker
 
-- block:
+- name: Configure scheduled tasks
+  when: netbox_systemd_timers is defined
+  block:
     - name: Fail if timer command is not set
-      fail:
+      ansible.builtin.fail:
         msg: Variable command is not defined
       when: item.value.enabled | bool and item.value.command is undefined
       with_dict: "{{ netbox_systemd_timers }}"
@@ -94,5 +96,3 @@
         scope: system
       when: not item.value.enabled | bool
       with_dict: "{{ netbox_systemd_timers }}"
-
-  when: netbox_systemd_timers is defined

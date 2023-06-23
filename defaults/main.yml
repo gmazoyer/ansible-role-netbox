@@ -64,4 +64,3 @@ netbox_systemd_timers:
     enabled: true
     command: "{{ netbox_virtualenv_path }}/bin/python {{ netbox_install_directory }}/netbox/manage.py housekeeping"
     on_calendar: "*-*-* 4:30:00 UTC"
-    user: "{{ netbox_user }}"
