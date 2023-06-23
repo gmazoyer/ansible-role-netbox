@@ -43,3 +43,56 @@
     - Reload systemd
     - Restart NetBox
     - Restart NetBox rqworker
+
+- block:
+    - name: Fail if timer command is not set
+      fail:
+        msg: Variable command is not defined
+      when: item.value.enabled | bool and item.value.command is undefined
+      with_dict: "{{ netbox_systemd_timers }}"
+    
+    - name: Setup timer service file
+      ansible.builtin.template:
+        src: systemd_timer_service.j2
+        dest: "{{ netbox_systemd_directory }}/{{ item.key }}.service"
+        owner: "{{ netbox_user }}"
+        group: "{{ netbox_group }}"
+        mode: "644"
+      with_dict: "{{ netbox_systemd_timers }}"
+      notify:
+        - Reload systemd
+
+    - name: Setup timer file
+      ansible.builtin.template:
+        src: systemd_timer.j2
+        dest: "{{ netbox_systemd_directory }}/{{ item.key }}.timer"
+        owner: "{{ netbox_user }}"
+        group: "{{ netbox_group }}"
+        mode: "644"
+      with_dict: "{{ netbox_systemd_timers }}"
+      notify:
+        - Reload systemd
+
+    - name: Enable timer
+      ansible.builtin.systemd:
+        name: "{{ item.key }}.timer"
+        state: restarted
+        enabled: true
+        masked: false
+        daemon_reload: true
+        scope: system
+      when: item.value.enabled | bool
+      with_dict: "{{ netbox_systemd_timers }}"
+
+    - name: Disable timer
+      ansible.builtin.systemd:
+        name: "{{ item.key }}.timer"
+        state: stopped
+        enabled: false
+        masked: false
+        daemon_reload: true
+        scope: system
+      when: not item.value.enabled | bool
+      with_dict: "{{ netbox_systemd_timers }}"
+
+  when: netbox_systemd_timers is defined

@@ -197,16 +197,6 @@
       become: true
       become_user: "{{ netbox_user }}"
 
-- name: Setup housekeeping
-  ansible.builtin.cron:
-    name: Housekeeping
-    hour: "{{ netbox_housekeeping_hour }}"
-    minute: "{{ netbox_housekeeping_minute }}"
-    job: "{{ netbox_virtualenv_path }}/bin/python {{ netbox_install_directory }}/netbox/manage.py housekeeping"
-    user: "{{ netbox_user }}"
-    cron_file: netbox
-  when: netbox_housekeeping | bool
-
 - name: Create super user
   ansible.builtin.shell: "printf '{{ netbox_superuser_script }}' | {{ netbox_virtualenv_path }}/bin/python {{ netbox_install_directory }}/netbox/manage.py shell"
   become: true

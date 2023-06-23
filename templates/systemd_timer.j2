@@ -1,0 +1,13 @@
+[Unit]
+Description={{ item.key }} Timer
+
+[Timer]
+{% if item.value.on_unit_active_sec is defined %}
+OnUnitActiveSec={{ item.value.on_unit_active_sec }}
+{% endif %}
+{% if item.value.on_calendar is defined %}
+OnCalendar={{ item.value.on_calendar }}
+{% endif %}
+
+[Install]
+WantedBy=timers.target

@@ -58,7 +58,10 @@ netbox_config:
   REPORTS_ROOT: "{{ netbox_install_directory }}/netbox/reports"
   RQ_DEFAULT_TIMEOUT: 300
 
-# Housekeeping
-netbox_housekeeping: true
-netbox_housekeeping_hour: 4
-netbox_housekeeping_minute: 30
+# Timers (for running commands periodically)
+netbox_systemd_timers:
+  netbox-housekeeping:
+    enabled: true
+    command: "{{ netbox_virtualenv_path }}/bin/python {{ netbox_install_directory }}/netbox/manage.py housekeeping"
+    on_calendar: "*-*-* 4:30:00 UTC"
+    user: "{{ netbox_user }}"
