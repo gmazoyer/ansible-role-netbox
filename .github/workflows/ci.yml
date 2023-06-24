@@ -38,6 +38,7 @@ jobs:
       matrix:
         distro:
           - debian11
+          - debian12
           - ubuntu2004
           - ubuntu2204
     steps:
