@@ -19,12 +19,20 @@
   become: true
   become_user: "{{ netbox_postgresql_user }}"
 
+- name: Set PostgreSQL user as owner of database
+  community.postgresql.postgresql_owner:
+    db: "{{ netbox_database }}"
+    new_owner: "{{ netbox_database_user }}"
+  become: true
+  become_user: "{{ netbox_postgresql_user }}"
+
 - name: Grant ALL privileges to PostgreSQL user
   community.postgresql.postgresql_privs:
     db: "{{ netbox_database }}"
     privs: ALL
+    type: schema
+    objs: public
     role: "{{ netbox_database_user }}"
-    type: database
   become: true
   become_user: "{{ netbox_postgresql_user }}"
 
