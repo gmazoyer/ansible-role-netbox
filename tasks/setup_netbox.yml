@@ -13,6 +13,7 @@
     group: "{{ netbox_group }}"
     state: directory
     mode: "755"
+  become: true
   when: not netbox_installed.stat.exists
 
 - name: Download using git
