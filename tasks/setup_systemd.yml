@@ -17,6 +17,8 @@
     owner: "{{ netbox_user }}"
     group: "{{ netbox_group }}"
     mode: "644"
+  become: true
+  become_user: "{{ netbox_user }}"
   notify:
     - Restart NetBox
 
@@ -27,6 +29,7 @@
     owner: root
     group: root
     mode: "644"
+  become: true
   notify:
     - Reload systemd
     - Restart NetBox
@@ -39,6 +42,7 @@
     owner: root
     group: root
     mode: "644"
+  become: true
   notify:
     - Reload systemd
     - Restart NetBox
@@ -60,6 +64,7 @@
         owner: "{{ netbox_user }}"
         group: "{{ netbox_group }}"
         mode: "644"
+      become: true
       with_dict: "{{ netbox_systemd_timers }}"
       notify:
         - Reload systemd
@@ -71,6 +76,7 @@
         owner: "{{ netbox_user }}"
         group: "{{ netbox_group }}"
         mode: "644"
+      become: true
       with_dict: "{{ netbox_systemd_timers }}"
       notify:
         - Reload systemd
@@ -82,6 +88,7 @@
         enabled: true
         masked: false
         scope: system
+      become: true
       when: item.value.enabled | bool
       with_dict: "{{ netbox_systemd_timers }}"
       notify:
@@ -94,6 +101,7 @@
         enabled: false
         masked: false
         scope: system
+      become: true
       when: not item.value.enabled | bool
       with_dict: "{{ netbox_systemd_timers }}"
       notify:
