@@ -2,12 +2,14 @@
 - name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
+  become: true
 
 - name: Restart NetBox
   ansible.builtin.service:
     name: netbox
     state: restarted
     enabled: true
+  become: true
   when: netbox_setup_systemd | bool
 
 - name: Restart NetBox rqworker
@@ -15,6 +17,7 @@
     name: netbox-rqworker
     state: restarted
     enabled: true
+  become: true
   when: netbox_setup_systemd | bool
 
 - name: Restart Apache2
@@ -22,4 +25,5 @@
     name: "{{ netbox_apache2_service }}"
     state: restarted
     enabled: true
+  become: true
   when: netbox_setup_web_frontend | bool
