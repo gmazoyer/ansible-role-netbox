@@ -6,6 +6,7 @@
     name: "{{ __netbox_required_packages | flatten }}"
     state: present
     update_cache: true
+  become: true
   vars:
     __netbox_required_packages:
       - "{{ netbox_python_packages }}"
