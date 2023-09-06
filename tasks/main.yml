@@ -18,6 +18,7 @@
     - name: Create NetBox group
       ansible.builtin.group:
         name: "{{ netbox_group }}"
+      become: true
 
     - name: Create NetBox user
       ansible.builtin.user:
@@ -25,6 +26,7 @@
         group: "{{ netbox_group }}"
         home: "{{ netbox_user_home_directory }}"
         shell: "/bin/false"
+      become: true
 
 - name: Setup database
   ansible.builtin.import_tasks: setup_database.yml
