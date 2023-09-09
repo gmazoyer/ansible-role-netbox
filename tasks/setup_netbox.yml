@@ -13,6 +13,7 @@
     group: "{{ netbox_group }}"
     state: directory
     mode: "755"
+  become: true
   when: not netbox_installed.stat.exists
 
 - name: Download using git
@@ -104,6 +105,8 @@
     owner: "{{ netbox_user }}"
     group: "{{ netbox_group }}"
     mode: "644"
+  become: true
+  become_user: "{{ netbox_user }}"
   notify:
     - Restart NetBox
     - Restart NetBox rqworker
