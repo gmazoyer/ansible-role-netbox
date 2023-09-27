@@ -9,6 +9,12 @@
   # Needed to allow token-based API authentication
   WSGIPassAuthorization on
 
+{% if netbox_web_tls and netbox_web_tls_redirect %}
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+{% endif %}
+
   <Directory {{ netbox_install_directory }}/netbox/static>
     Options Indexes FollowSymLinks MultiViews
     AllowOverride None

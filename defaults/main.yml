@@ -47,6 +47,7 @@ netbox_web_tls_port: 443
 # netbox_web_tls_crt: /etc/pki/server.crt
 # netbox_web_tls_key: /etc/pki/server.key
 # netbox_web_tls_chain:
+netbox_web_tls_redirect: false
 
 # Database related variables (password must be changed)
 netbox_database: netbox
