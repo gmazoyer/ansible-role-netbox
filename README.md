@@ -112,14 +112,14 @@ netbox_setup_web_frontend: false
 ```
 
 SSL/TLS configuration for the frontend web server:
-...
+```
 netbox_web_tls: false
 netbox_web_tls_port: 443
 # netbox_web_tls_crt: /etc/pki/server.crt
 # netbox_web_tls_key: /etc/pki/server.key
 # netbox_web_tls_chain:
 netbox_web_tls_redirect: false
-...
+```
 
 ## Example Playbook
 
