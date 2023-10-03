@@ -11,6 +11,22 @@
   notify:
     - Restart Apache2
 
+- name: Enable Apache2 ssl module (if required)
+  community.general.apache2_module:
+    state: present
+    name: ssl
+  notify:
+    - Restart Apache2
+  when: netbox_web_tls
+
+- name: Enable Apache2 rewrite module (if required)
+  community.general.apache2_module:
+    state: present
+    name: rewrite
+  notify:
+    - Restart Apache2
+  when: netbox_web_tls_redirect
+
 - name: Remove default vhost
   ansible.builtin.file:
     path: "{{ netbox_apache2_sites_enabled_path }}/{{ netbox_apache2_default_vhost }}"

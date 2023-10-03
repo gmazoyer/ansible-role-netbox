@@ -9,6 +9,12 @@
   # Needed to allow token-based API authentication
   WSGIPassAuthorization on
 
+{% if netbox_web_tls and netbox_web_tls_redirect %}
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+{% endif %}
+
   <Directory {{ netbox_install_directory }}/netbox/static>
     Options Indexes FollowSymLinks MultiViews
     AllowOverride None
@@ -24,4 +30,37 @@
   ProxyPass         / http://{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}/
   ProxyPassReverse  / http://{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}/
 </VirtualHost>
+
+{% if netbox_web_tls and netbox_web_tls_port %}
+
+<VirtualHost *:{{ netbox_web_tls_port }}>
+  ServerName {{ host }}
+
+  SSLEngine on
+  SSLCertificateFile {{ netbox_web_tls_crt }}
+  SSLCertificateKeyFile {{ netbox_web_tls_key }}
+  {{ (netbox_web_tls_chain is defined and netbox_web_tls_chain is not none) | ternary('', '# ') }}SSLCertificateChainFile {{ netbox_web_tls_chain | default('') }}
+
+  Alias /static {{ netbox_install_directory }}/netbox/static
+
+  # Needed to allow token-based API authentication
+  WSGIPassAuthorization on
+
+  <Directory {{ netbox_install_directory }}/netbox/static>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
+    Require all granted
+  </Directory>
+
+  <Location /static>
+    ProxyPass !
+  </Location>
+
+  ProxyPreserveHost On
+  RequestHeader     set "X-Forwarded-Proto" expr=%{REQUEST_SCHEME}
+  ProxyPass         / http://{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}/
+  ProxyPassReverse  / http://{{ netbox_gunicorn_address }}:{{ netbox_gunicorn_port }}/
+</VirtualHost>
+{% endif %}
+
 {% endfor %}

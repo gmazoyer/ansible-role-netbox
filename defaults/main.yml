@@ -42,6 +42,12 @@ netbox_gunicorn_workers_number: "{{ ansible_processor_vcpus + 1 }}"
 
 # Web frontend variables (not configured by default)
 netbox_setup_web_frontend: false
+netbox_web_tls: false
+netbox_web_tls_port: 443
+# netbox_web_tls_crt: /etc/pki/server.crt
+# netbox_web_tls_key: /etc/pki/server.key
+# netbox_web_tls_chain:
+netbox_web_tls_redirect: false
 
 # Database related variables (password must be changed)
 netbox_database: netbox
