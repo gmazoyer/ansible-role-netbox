@@ -1,11 +1,11 @@
 ---
 # Copyright (c) 2017-2018 Musee "lae" Ullah under the MIT License
-# Copyright (c) 2020 Guillaume Mazoyer under the GPL
+# Copyright (c) 2020-2024 Guillaume Mazoyer under the GPL
 
 netbox_systemd_directory: /etc/systemd/system/
 
 netbox_superuser_script: |
-  from django.contrib.auth.models import User
+  from users.models import User
   from base64 import b64decode
   password = b64decode("{{ netbox_superuser_password | b64encode }}").decode("UTF-8")
   query = User.objects.filter(username="{{ netbox_superuser_username }}")
