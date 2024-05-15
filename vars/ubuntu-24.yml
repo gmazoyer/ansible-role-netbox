@@ -27,7 +27,7 @@ __netbox_ldap_packages:
 __netbox_web_frontend_packages:
   - apache2
   - apache2-utils
-  - libapache2-mod-wsgi
+  - libapache2-mod-wsgi-py3
 
 netbox_python_binary: /usr/bin/python3.12
 
