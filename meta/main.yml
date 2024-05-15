@@ -11,8 +11,8 @@ galaxy_info:
         - bookworm
     - name: Ubuntu
       versions:
-        - focal
         - jammy
+        - noble
   galaxy_tags:
     - system
     - networking

@@ -38,8 +38,8 @@ jobs:
       matrix:
         distro:
           - debian12
-          - ubuntu2004
           - ubuntu2204
+          - ubuntu2404
     steps:
       - uses: actions/checkout@v4
         with:
