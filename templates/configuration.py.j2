@@ -2,6 +2,8 @@
 {# # Copyright (c) 2017-2020 Guillaume Mazoyer under the GPL #}
 # {{ ansible_managed }}
 
+import json
+
 DATABASE = {
     'NAME': '{{ netbox_database }}',
     'USER': '{{ netbox_database_user }}',
@@ -33,7 +35,9 @@ REMOTE_AUTH_BACKEND = 'netbox.authentication.LDAPBackend'
 {% for setting, value in netbox_config.items() %}
 {% if value in [True, False] %}
 {{ setting }} = {{ 'True' if value else 'False' }}
-{% else %}
+{% elif value is number or value is string %}
 {{ setting }} = {{ value | to_nice_json }}
+{% else %}
+{{ setting }} = json.loads(r"""{{ value | to_json }}""")
 {% endif %}
 {% endfor %}
