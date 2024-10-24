@@ -61,7 +61,7 @@
     group: "{{ netbox_group }}"
     mode: "644"
   register: local_requirements_file
-  when: netbox_local_requirements | bool
+  when: netbox_local_requirements is truthy
 
 - name: Install local requirements
   ansible.builtin.pip:
