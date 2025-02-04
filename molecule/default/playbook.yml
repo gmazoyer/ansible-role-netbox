@@ -13,8 +13,8 @@
     netbox_ldap_config: "AUTH_LDAP_SERVER_URI = '127.0.0.1'"
 
   pre_tasks:
-    - name: update apt cache
-      apt:
+    - name: Update apt cache
+      ansible.builtinapt:
         update_cache: true
         cache_valid_time: 600
       register: package_result
