@@ -34,6 +34,9 @@ netbox_setup_ldap_auth: false
 # http://netbox.readthedocs.io/en/latest/installation/ldap/
 netbox_ldap_config: ""
 
+# LDAP logging
+netbox_setup_ldap_logging: false
+
 # Systemd unit variables (configured by default)
 netbox_setup_systemd: true
 netbox_gunicorn_address: 127.0.0.1
