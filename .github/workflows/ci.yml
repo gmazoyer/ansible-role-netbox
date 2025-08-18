@@ -17,7 +17,7 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           path: 'gmazoyer.netbox'
       - name: Setup Python
@@ -42,7 +42,7 @@ jobs:
           - ubuntu2204
           - ubuntu2404
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           path: 'gmazoyer.netbox'
       - name: Setup Python
@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint, molecule]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           path: 'gmazoyer.netbox'
       - name: Setup Python
