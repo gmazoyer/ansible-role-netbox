@@ -32,6 +32,28 @@ REDIS = {
 REMOTE_AUTH_BACKEND = 'netbox.authentication.LDAPBackend'
 {% endif %}
 
+{% if netbox_setup_ldap_logging %}
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'netbox_auth_log': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/opt/netbox/django-ldap-debug.log',
+            'maxBytes': 1024 * 500,
+            'backupCount': 5,
+        },
+    },
+    'loggers': {
+        'django_auth_ldap': {
+            'handlers': ['netbox_auth_log'],
+            'level': 'DEBUG',
+        },
+    },
+}
+{% endif %}
+
 {% for setting, value in netbox_config.items() %}
 {% if value in [True, False] %}
 {{ setting }} = {{ 'True' if value else 'False' }}
@@ -41,3 +63,5 @@ REMOTE_AUTH_BACKEND = 'netbox.authentication.LDAPBackend'
 {{ setting }} = json.loads(r"""{{ value | to_json }}""")
 {% endif %}
 {% endfor %}
+
+
