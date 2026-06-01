@@ -1,5 +1,5 @@
 {# Copyright (c) 2017-2018 Musee "lae" Ullah under the MIT License #}
-{# # Copyright (c) 2017-2020 Guillaume Mazoyer under the GPL #}
+{# # Copyright (c) 2017-2026 Guillaume Mazoyer under the GPL #}
 # {{ ansible_managed }}
 
 import json
@@ -35,6 +35,12 @@ REMOTE_AUTH_BACKEND = 'netbox.authentication.LDAPBackend'
 {% for setting, value in netbox_config.items() %}
 {% if value in [True, False] %}
 {{ setting }} = {{ 'True' if value else 'False' }}
+{% elif setting == 'API_TOKEN_PEPPERS' %}
+{{ setting }} = {
+{% for key, val in value.items() %}
+    {{ key | int }}: {{ val | to_json }},
+{% endfor %}
+}
 {% elif value is number or value is string %}
 {{ setting }} = {{ value | to_nice_json }}
 {% else %}
