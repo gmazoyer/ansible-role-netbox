@@ -1,7 +1,7 @@
 ---
 __netbox_python_packages:
-  - python3.11
-  - python3.11-dev
+  - python3.14
+  - python3.14-dev
   - python3-venv
   - python3-pip
 __netbox_postgresql_packages:
@@ -29,7 +29,7 @@ __netbox_web_frontend_packages:
   - apache2-utils
   - libapache2-mod-wsgi-py3
 
-netbox_python_binary: /usr/bin/python3.11
+netbox_python_binary: /usr/bin/python3.14
 
 netbox_postgresql_service: postgresql
 netbox_postgresql_user: postgres
