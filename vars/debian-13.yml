@@ -12,6 +12,7 @@ __netbox_redis_packages:
   - redis-server
 
 __netbox_other_packages:
+  - acl
   - git
   - libxml2-dev
   - libxslt1-dev
