@@ -10,6 +10,7 @@
     - wsgi
   notify:
     - Restart Apache2
+  become: true
 
 - name: Enable Apache2 ssl module (if required)
   community.general.apache2_module:
@@ -18,6 +19,7 @@
   notify:
     - Restart Apache2
   when: netbox_web_tls
+  become: true
 
 - name: Enable Apache2 rewrite module (if required)
   community.general.apache2_module:
@@ -26,6 +28,7 @@
   notify:
     - Restart Apache2
   when: netbox_web_tls_redirect
+  become: true
 
 - name: Remove default vhost
   ansible.builtin.file:
@@ -33,6 +36,7 @@
     state: absent
   notify:
     - Restart Apache2
+  become: true
 
 - name: Configure NetBox vhost
   ansible.builtin.template:
@@ -41,6 +45,7 @@
     owner: "{{ netbox_apache2_user }}"
     group: "{{ netbox_apache2_group }}"
     mode: "644"
+  become: true
 
 - name: Enable NetBox vhost
   ansible.builtin.file:
@@ -49,3 +54,4 @@
     state: link
   notify:
     - Restart Apache2
+  become: true
